@@ -6,18 +6,18 @@ import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 // Configure routes.
-final _router = Router()
-  ..get('/', _rootHandler)
-  ..get('/echo/<message>', _echoHandler);
+// final _router = Router()
+//   ..get('/', _rootHandler)
+//   ..get('/echo/<message>', _echoHandler);
 
-Response _rootHandler(Request req) {
-  return Response.ok('Hello, Worrrrrld!\n');
-}
+// Response _rootHandler(Request req) {
+//   return Response.ok('Hello, Worrrrrld!\n');
+// }
 
-Response _echoHandler(Request request) {
-  final message = request.params['message'];
-  return Response.ok('$message\n');
-}
+// Response _echoHandler(Request request) {
+//   final message = request.params['message'];
+//   return Response.ok('$message\n');
+// }
 
 void main(List<String> args) async {
   // Use any available host or container IP (usually `0.0.0.0`).
@@ -28,18 +28,31 @@ void main(List<String> args) async {
   final appConfig = ApplicationConfig();
   appConfig.loadConfigApplication(router);
 
-  // router.get('/', (Request request) {
-  //   return Response.ok('Hello Dario');
-  // });
-
-  // router.mount('/helloController/', Controller().router.call);
-
-  // Configure a pipeline that logs requests.
-  final handler =
-      Pipeline().addMiddleware(logRequests()).addHandler(router.call);
+  final handler = Pipeline()
+      .addMiddleware((innerHandler) {
+        print("MIDDLEWARE 1 INICIANDO");
+        return (Request request) async {
+          print("MIDDLEWARE 1 FUNÇÃO INTERNA");
+          final resp = await innerHandler(request);
+          print("FINALIZANDO MIDDLEWARE 1 FUNÇÃO INTERNA");
+          return resp;
+        };
+      })
+      .addMiddleware((innerHandler) {
+        print("MIDDLEWARE 2 INICIANDO");
+        return (Request request) async {
+          print("MIDDLEWARE 2 FUNÇÃO INTERNA");
+          final resp = await innerHandler(request);
+          print("FINALIZANDO MIDDLEWARE 2 FUNÇÃO INTERNA");
+          return resp;
+        };
+      })
+      .addMiddleware(logRequests())
+      .addHandler(router.call);
 
   // For running in containers, we respect the PORT environment variable.
   final port = int.parse(Platform.environment['PORT'] ?? '8080'); //8093
+
   final server = await serve(handler, ip, port);
   print('Server listening on port ${server.port}');
 }
