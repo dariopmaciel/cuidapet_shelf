@@ -10,6 +10,6 @@ class ApplicationConfig {
 
     // print(variavel);
     // print(flutterHome);
-    _loadDataBaseConfig(){}
+    _loadDataBaseConfig() {}
   }
 }
