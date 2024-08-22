@@ -33,9 +33,12 @@ void main(List<String> args) async {
         print("MIDDLEWARE 1 INICIANDO");
         return (Request request) async {
           print("MIDDLEWARE 1 FUNÇÃO INTERNA");
-          final resp = await innerHandler(request);
-          print("FINALIZANDO MIDDLEWARE 1 FUNÇÃO INTERNA");
-          return resp;
+          //mensagem intermediária de middleware bloqueando a função
+          return Response.ok("DAQUI NÃO PASSA NINGUEM",
+              headers: {'content-type': 'application/json'});
+          // final resp = await innerHandler(request);
+          // print("FINALIZANDO MIDDLEWARE 1 FUNÇÃO INTERNA");
+          // return resp;
         };
       })
       .addMiddleware((innerHandler) {
