@@ -1,5 +1,6 @@
 import 'package:cuidapet_shelf/application/config/database_connection_configuration.dart';
-import 'package:mysql1/src/single_connection.dart';
+import 'package:mysql1/mysql1.dart';
+
 
 import './i_database_connection.dart';
 
