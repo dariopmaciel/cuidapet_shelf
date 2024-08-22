@@ -2,7 +2,7 @@ import 'package:cuidapet_shelf/application/config/service_locator_config.config.
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
-import 'service_locator_config.dart';
+// import 'service_locator_config.dart';
 
 
 final getIt = GetIt.instance;  

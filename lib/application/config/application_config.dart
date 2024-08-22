@@ -27,6 +27,6 @@ class ApplicationConfig {
   }
 
   void _configLogger() => GetIt.I.registerLazySingleton(() => Logger());
-
-  void _loadDependencies() => configureDependencies();
+  
+  void _loadDependencies() =>configureDependencies();
 }
