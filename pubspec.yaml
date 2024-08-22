@@ -10,11 +10,19 @@ dependencies:
   args: ^2.5.0
   dotenv: ^3.0.0
   get_it: ^7.7.0
+  injectable: ^2.4.4
+  injectable_generator: ^2.6.2
+  logger: ^2.4.0
   mysql1: ^0.20.0
   shelf: ^1.4.1
   shelf_router: ^1.1.4
 
 dev_dependencies:
+  build_runner: ^2.4.12
   http: ^1.2.2
   lints: ^4.0.0
   test: ^1.25.8
+
+# para quando necessário sobescrever
+# dependencies_overrrides
+#
