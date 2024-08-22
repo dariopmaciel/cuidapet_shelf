@@ -26,7 +26,7 @@ void main(List<String> args) async {
 //Application Config
   final router = Router();
   final appConfig = ApplicationConfig();
-  appConfig.loadConfigApplication();
+  appConfig.loadConfigApplication(router);
 
   // router.get('/', (Request request) {
   //   return Response.ok('Hello Dario');
