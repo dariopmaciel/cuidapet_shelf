@@ -5,11 +5,11 @@ class ApplicationConfig {
 
   Future<void> loadConfigApplication() async {
     await _loadEnv();
-    // final variavel = env['url_banco_de_dados'];
-    // final flutterHome = env['FLUTTER_HOME'];
+    final variavel = env['url_banco_de_dados'];
+    final flutterHome = env['FLUTTER_HOME'];
 
-    // print(variavel);
-    // print(flutterHome);
+    print(variavel);
+    print(flutterHome);
     _loadDataBaseConfig() {}
   }
 }
