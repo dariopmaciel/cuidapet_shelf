@@ -1,6 +1,8 @@
 //dart create -t server-shelf ./nome_projeto
 import 'dart:io';
 import 'package:cuidapet_shelf/application/config/application_config.dart';
+import 'package:cuidapet_shelf/application/modules/middlewares/cors/cors_middlewares.dart';
+import 'package:cuidapet_shelf/application/modules/middlewares/default_content_type/default_content_type.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -29,27 +31,33 @@ void main(List<String> args) async {
   appConfig.loadConfigApplication(router);
 
   final handler = Pipeline()
-      .addMiddleware((innerHandler) {
-        print("MIDDLEWARE 1 INICIANDO");
-        return (Request request) async {
-          print("MIDDLEWARE 1 FUNÇÃO INTERNA");
-          //mensagem intermediária de middleware bloqueando a função
-          return Response.ok("DAQUI NÃO PASSA NINGUEM",
-              headers: {'content-type': 'application/json'});
-          // final resp = await innerHandler(request);
-          // print("FINALIZANDO MIDDLEWARE 1 FUNÇÃO INTERNA");
-          // return resp;
-        };
-      })
-      .addMiddleware((innerHandler) {
-        print("MIDDLEWARE 2 INICIANDO");
-        return (Request request) async {
-          print("MIDDLEWARE 2 FUNÇÃO INTERNA");
-          final resp = await innerHandler(request);
-          print("FINALIZANDO MIDDLEWARE 2 FUNÇÃO INTERNA");
-          return resp;
-        };
-      })
+      // .addMiddleware((innerHandler) {
+      //   print("MIDDLEWARE 1 INICIANDO");
+      //   return (Request request) async {
+      //     print("MIDDLEWARE 1 FUNÇÃO INTERNA");
+      //     //mensagem intermediária de middleware bloqueando a função
+      //     return Response.ok("DAQUI NÃO PASSA NINGUEM",
+      //         headers: {'content-type': 'application/json'});
+      //     // final resp = await innerHandler(request);
+      //     // print("FINALIZANDO MIDDLEWARE 1 FUNÇÃO INTERNA");
+      //     // return resp;
+      //   };
+      // })
+      // .addMiddleware((innerHandler) {
+      //   print("MIDDLEWARE 2 INICIANDO");
+      //   return (Request request) async {
+      //     print("MIDDLEWARE 2 FUNÇÃO INTERNA");
+      //     final resp = await innerHandler(request);
+      //     print("FINALIZANDO MIDDLEWARE 2 FUNÇÃO INTERNA");
+      //     return resp;
+      //   };
+      // })
+      //
+      .addMiddleware(CorsMiddlewares().handler)
+      // .addMiddleware(DefaultContentType().handler)
+      //ambas as formas estão corretas
+      //passa por parametro
+      .addMiddleware(DefaultContentType('application/json;charset=utf-8').handler)
       .addMiddleware(logRequests())
       .addHandler(router.call);
 
@@ -57,7 +65,8 @@ void main(List<String> args) async {
   final port = int.parse(Platform.environment['PORT'] ?? '8080'); //8093
 
   final server = await serve(handler, ip, port);
-  print('Server listening on port ${server.port}');
+  // print('Server listening on port ${server.port}');
+  print('Server listening on port ${server.address.host}: ${server.port}');
 }
 
 
