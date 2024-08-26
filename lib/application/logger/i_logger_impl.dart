@@ -1,7 +1,11 @@
 import './i_logger.dart';
 import 'package:logger/logger.dart' as log;
 
+
+//pacotes de apresentação de log - apresentação por cor
 class ILoggerImpl implements ILogger {
+  //variavel pq a clsse tem o menos nome devo fazer jogada as log no pacote
+  
   final _logger = log.Logger();
 
   @override

@@ -1,3 +1,6 @@
+//Estruturas gerais de Logs
+//contratos
+
 abstract interface class ILogger {
   void debug(dynamic message, [dynamic error, StackTrace? stackTrace]);
   void error(dynamic message, [dynamic error, StackTrace? stackTrace]);
