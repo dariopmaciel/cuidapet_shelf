@@ -11,7 +11,7 @@ class TesteController {
     print('>>>>>>>INICIANDO TESTE CONTROLLER');
     //caso não feito como exemplo abaixo, pode ser feito um Middlerware que efetue isto automaticamnete
     //como foi feito
-    final resp=  Response.ok(jsonEncode({'message': 'hello'}));
+    final resp=  Response.ok(jsonEncode({'message': 'Hellllllllo'}));
     //apresenta como JSON
     // final resp=  Response.ok(jsonEncode({'message': 'hello'}),headers: {'content-type': 'application/json'});
     print('>>>>>>FINALIZANDO TESTE CONTROLLER');

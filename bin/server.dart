@@ -26,7 +26,7 @@ void main(List<String> args) async {
   final ip = InternetAddress.anyIPv4;
 
 //Application Config
-  final router = Router();
+  final router = Router(); //config do server router, instancia o router
   final appConfig = ApplicationConfig();
   appConfig.loadConfigApplication(router);
 
@@ -57,7 +57,8 @@ void main(List<String> args) async {
       // .addMiddleware(DefaultContentType().handler)
       //ambas as formas estão corretas
       //passa por parametro
-      .addMiddleware(DefaultContentType('application/json;charset=utf-8').handler)
+      .addMiddleware(
+          DefaultContentType('application/json;charset=utf-8').handler)
       .addMiddleware(logRequests())
       .addHandler(router.call);
 

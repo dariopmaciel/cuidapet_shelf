@@ -5,6 +5,7 @@ import 'package:shelf_router/shelf_router.dart';
 import 'package:cuidapet_shelf/application/routes/i_router.dart';
 
 class RouterConfigure {
+  
   final Router _router;
   final List<IRouter> _routers = [
     TesteRouter(),
