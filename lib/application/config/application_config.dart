@@ -31,6 +31,9 @@ class ApplicationConfig {
     GetIt.I.registerSingleton(databaseConfig);
   }
 
+
+// adicionado aqui para poder recuperar no 'getit' em qlquer lugar da aplicação
+//quando houver a necessidade deste, sua primeira vez irá chama-lo
   void _configLogger() => GetIt.I.registerLazySingleton(() => Logger());
   
   void _loadDependencies() =>configureDependencies();
