@@ -26,6 +26,8 @@ class ApplicationConfig {
       password: env['DATABASE_PASSWORD'] ?? env['databasePassword']!,
       databaseName: env['DATABASE_NAME'] ?? env['databaseName']!,
     );
+    //ADICIONAR ESTA INSTANCIA DENTRO DO SERVICE LOCATOR
+    //GETIT 
     GetIt.I.registerSingleton(databaseConfig);
   }
 

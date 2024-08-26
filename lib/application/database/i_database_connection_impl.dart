@@ -3,9 +3,9 @@ import 'package:cuidapet_shelf/application/config/database_connection_configurat
 import 'package:mysql1/mysql1.dart';
 
 import './i_database_connection.dart';
-
-// @LazySingleton(as: IDatabaseConnectionImpl)
+//CLASSSE DE CONEXÃO
 class IDatabaseConnectionImpl extends IDatabaseConnection {
+  //
   final DatabaseConnectionConfiguration _configuration;
 
   IDatabaseConnectionImpl(this._configuration);
