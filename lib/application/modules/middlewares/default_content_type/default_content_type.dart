@@ -1,6 +1,6 @@
 import 'package:cuidapet_shelf/application/modules/middlewares/middlewares.dart';
-import 'package:shelf/src/request.dart';
-import 'package:shelf/src/response.dart';
+import 'package:shelf/shelf.dart';
+
 
 class DefaultContentType extends Middlewares {
 

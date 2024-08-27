@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cuidapet_shelf/application/config/application_config.dart';
 import 'package:cuidapet_shelf/application/modules/middlewares/cors/cors_middlewares.dart';
 import 'package:cuidapet_shelf/application/modules/middlewares/default_content_type/default_content_type.dart';
+import 'package:cuidapet_shelf/application/modules/middlewares/security/security_middleware.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -23,13 +25,15 @@ import 'package:shelf_router/shelf_router.dart';
 
 void main(List<String> args) async {
   // Use any available host or container IP (usually `0.0.0.0`).
-  final _hostname = InternetAddress.anyIPv4;
+  final _hostname =  InternetAddress.anyIPv4;
 
 //Application Config
   final router = Router(); //config do server router, instancia o router
   final appConfig = ApplicationConfig();
-  appConfig.loadConfigApplication(router);
+  await appConfig.loadConfigApplication(router);
 
+
+final getIt = GetIt.I;
   final handler = Pipeline()
       // .addMiddleware((innerHandler) {
       //   print("MIDDLEWARE 1 INICIANDO");
@@ -60,6 +64,7 @@ void main(List<String> args) async {
       //passa por parametro
       //abaixo formatador
       .addMiddleware(DefaultContentType('application/json;charset=utf-8').handler)
+      .addMiddleware(SecurityMiddleware(getIt.get()).handler)
       .addMiddleware(logRequests())
       .addHandler(router.call);
 

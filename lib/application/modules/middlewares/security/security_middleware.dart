@@ -19,25 +19,26 @@ class SecurityMiddleware extends Middlewares {
     )
   ];
 
-  SecurityMiddleware({required this.log});
+  SecurityMiddleware( this.log);
 
   @override
   Future<Response> execute(Request request) async {
-    if (skipUrl.contains(
-        SecuritySkipUrl(url: '/${request.url.path}', method: request.method))) {
-      return innerHandler(request);
-    }
-
-    final authHeader = request.headers['Authorization'];
-    if (authHeader == null || authHeader.isEmpty) {
-      return Response.forbidden(jsonEncode({}));
-    }
-
-    final authHeaderContent = authHeader.split(' ');
-    if (authHeaderContent[0] == "Bearer") {
-      return Response.forbidden(jsonEncode({}));
-    }
     try {
+      if (skipUrl.contains(SecuritySkipUrl(
+          url: '/${request.url.path}', method: request.method))) {
+        return innerHandler(request);
+      }
+//segundo passo
+      final authHeader = request.headers['Authorization'];
+      if (authHeader == null || authHeader.isEmpty) {
+        throw JwtException.invalidToken;
+      }
+
+      final authHeaderContent = authHeader.split(' ');
+      if (authHeaderContent[0] == "Bearer") {
+        throw JwtException.invalidToken;
+      }
+
       final authorizationToken = authHeaderContent[1];
 
       final claims = JwtHelper.getClaims(authorizationToken);
