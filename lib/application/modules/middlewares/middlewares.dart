@@ -1,6 +1,8 @@
 //METODOS IMPLEMENTADOS = CLASSE ABSTRATA = extends
 //SE NÃO TEM MÉTODOS IMPLEMENTADOS = É UMA INTERFACE = CONTRATO = implements
 
+//casca de todo o middleware
+
 import 'package:shelf/shelf.dart';
 
 abstract class Middlewares {

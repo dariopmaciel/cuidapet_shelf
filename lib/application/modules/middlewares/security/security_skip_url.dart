@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class SecuritySkipUrl {
   String url;
   String method;
@@ -11,7 +10,6 @@ class SecuritySkipUrl {
   @override
   bool operator ==(covariant SecuritySkipUrl other) {
     if (identical(this, other)) return true;
-
     return other.url == url && other.method == method;
   }
 

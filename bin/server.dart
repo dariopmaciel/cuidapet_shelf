@@ -23,7 +23,7 @@ import 'package:shelf_router/shelf_router.dart';
 
 void main(List<String> args) async {
   // Use any available host or container IP (usually `0.0.0.0`).
-  final ip = InternetAddress.anyIPv4;
+  final _hostname = InternetAddress.anyIPv4;
 
 //Application Config
   final router = Router(); //config do server router, instancia o router
@@ -37,7 +37,7 @@ void main(List<String> args) async {
       //     print("MIDDLEWARE 1 FUNÇÃO INTERNA");
       //     //mensagem intermediária de middleware bloqueando a função
       //     return Response.ok("DAQUI NÃO PASSA NINGUEM",
-      //         headers: {'content-type': 'application/json'});
+      //         headers: {'content-type': 'application/json'}); //abaixo deadcode
       //     // final resp = await innerHandler(request);
       //     // print("FINALIZANDO MIDDLEWARE 1 FUNÇÃO INTERNA");
       //     // return resp;
@@ -53,20 +53,21 @@ void main(List<String> args) async {
       //   };
       // })
       //
+      //Cors = CrossDomain (ligação entre dominios diferentes)
       .addMiddleware(CorsMiddlewares().handler)
       // .addMiddleware(DefaultContentType().handler)
       //ambas as formas estão corretas
       //passa por parametro
-      .addMiddleware(
-          DefaultContentType('application/json;charset=utf-8').handler)
+      //abaixo formatador
+      .addMiddleware(DefaultContentType('application/json;charset=utf-8').handler)
       .addMiddleware(logRequests())
       .addHandler(router.call);
 
   // For running in containers, we respect the PORT environment variable.
   final port = int.parse(Platform.environment['PORT'] ?? '8080'); //8093
 
-  final server = await serve(handler, ip, port);
-  // print('Server listening on port ${server.port}');
+  final server = await serve(handler, _hostname, port);
+  
   print('Server listening on port ${server.address.host}: ${server.port}');
 }
 
