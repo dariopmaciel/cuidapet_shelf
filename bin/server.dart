@@ -1,9 +1,9 @@
 //dart create -t server-shelf ./nome_projeto
 import 'dart:io';
 import 'package:cuidapet_shelf/application/config/application_config.dart';
-import 'package:cuidapet_shelf/application/modules/middlewares/cors/cors_middlewares.dart';
-import 'package:cuidapet_shelf/application/modules/middlewares/default_content_type/default_content_type.dart';
-import 'package:cuidapet_shelf/application/modules/middlewares/security/security_middleware.dart';
+import 'package:cuidapet_shelf/application/middlewares/cors/cors_middlewares.dart';
+import 'package:cuidapet_shelf/application/middlewares/default_content_type/default_content_type.dart';
+import 'package:cuidapet_shelf/application/middlewares/security/security_middleware.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';

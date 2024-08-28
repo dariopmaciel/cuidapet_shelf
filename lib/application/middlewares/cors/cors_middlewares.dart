@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cuidapet_shelf/application/modules/middlewares/middlewares.dart';
+import 'package:cuidapet_shelf/application/middlewares/middlewares.dart';
 import 'package:shelf/shelf.dart';
 // import 'package:shelf/src/request.dart';
 // import 'package:shelf/src/response.dart';

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'teste_controller.dart';
+part of 'auth_controller.dart';
 
 // **************************************************************************
 // ShelfRouterGenerator
 // **************************************************************************
 
-Router _$TesteControllerRouter(TesteController service) {
+Router _$AuthControllerRouter(AuthController service) {
   final router = Router();
   router.add(
     'GET',
