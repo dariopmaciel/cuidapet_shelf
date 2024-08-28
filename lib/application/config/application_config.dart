@@ -5,7 +5,7 @@ import 'package:cuidapet_shelf/application/logger/i_logger_impl.dart';
 import 'package:cuidapet_shelf/application/routes/router_configure.dart';
 import 'package:dotenv/dotenv.dart' show load, env;
 import 'package:get_it/get_it.dart';
-import 'package:logger/logger.dart';
+
 import 'package:shelf_router/shelf_router.dart';
 
 class ApplicationConfig {

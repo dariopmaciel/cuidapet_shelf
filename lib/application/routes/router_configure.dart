@@ -16,6 +16,7 @@ class RouterConfigure {
 
   RouterConfigure(this._router);
 
+  // ignore: avoid_function_literals_in_foreach_calls
   void configure() => _routers.forEach((element) => element.configure(_router),
       );
 }

@@ -25,7 +25,7 @@ import 'package:shelf_router/shelf_router.dart';
 
 void main(List<String> args) async {
   // Use any available host or container IP (usually `0.0.0.0`).
-  final _hostname =  InternetAddress.anyIPv4;
+  final hostname =  InternetAddress.anyIPv4;
 
 //Application Config
   final router = Router(); //config do server router, instancia o router
@@ -71,7 +71,7 @@ final getIt = GetIt.I;
   // For running in containers, we respect the PORT environment variable.
   final port = int.parse(Platform.environment['PORT'] ?? '8080'); //8093
 
-  final server = await serve(handler, _hostname, port);
+  final server = await serve(handler, hostname, port);
   
   print('Server listening on port ${server.address.host}: ${server.port}');
 }
