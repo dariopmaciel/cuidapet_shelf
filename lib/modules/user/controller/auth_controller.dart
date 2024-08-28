@@ -1,16 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 part 'auth_controller.g.dart';
 
+@injectable //add no getit
 class AuthController {
+  @Route.get('/')
+  Future<Response> find(Request request) async {
+    return Response.ok(jsonEncode(''));
+  }
 
-   @Route.get('/')
-   Future<Response> find(Request request) async { 
-      return Response.ok(jsonEncode(''));
-   }
-
-   Router get router => _$AuthControllerRouter(this);
+  Router get router => _$AuthControllerRouter(this);
 }
