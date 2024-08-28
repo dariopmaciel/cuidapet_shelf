@@ -8,7 +8,7 @@ import 'package:cuidapet_shelf/entities/user.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mysql1/mysql1.dart';
 
-import './i_user_repository.dart';
+import 'i_user_repository.dart';
 
 @lazySingleton
 class IUserRepositoryImpl implements IUserRepository {
