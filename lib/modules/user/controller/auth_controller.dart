@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cuidapet_shelf/modules/user/view_models/user_save_input_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -13,11 +14,13 @@ part 'auth_controller.g.dart';
 @injectable //add no getit
 class AuthController {
   IUserService userService;
-  
+
   AuthController({required this.userService});
 
   @Route.get('/')
   Future<Response> find(Request request) async {
+    final userModel = UserSaveInputModel(await request.readAsString());
+
     return Response.ok(jsonEncode(''));
   }
 
