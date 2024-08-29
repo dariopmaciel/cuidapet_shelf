@@ -9,10 +9,8 @@ import './i_user_service.dart';
 @lazySingleton
 class IUserServiceImpl implements IUserService {
   IUserRepository userRepository;
-  IUserServiceImpl({
-    required this.userRepository,
-  });
 
+  IUserServiceImpl({required this.userRepository});
 
 //objeto de transferencia de camadas
   @override
