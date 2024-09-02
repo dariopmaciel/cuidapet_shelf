@@ -4,9 +4,10 @@ import 'package:cuidapet_shelf/modules/user/data_repository/i_user_repository.da
 import 'package:cuidapet_shelf/modules/user/view_models/user_save_input_model.dart';
 import 'package:injectable/injectable.dart';
 
+
 import './i_user_service.dart';
 
-@lazySingleton
+@LazySingleton(as: IUserService )
 class IUserServiceImpl implements IUserService {
   IUserRepository userRepository;
 

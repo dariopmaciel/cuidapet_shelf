@@ -6,11 +6,12 @@ import 'package:cuidapet_shelf/application/helpers/cripty_helper.dart';
 import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:cuidapet_shelf/entities/user.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:mysql1/mysql1.dart';
 
 import 'i_user_repository.dart';
 
-@lazySingleton
+@LazySingleton(as: IUserRepository)
 class IUserRepositoryImpl implements IUserRepository {
   final IDatabaseConnection connection;
   final ILogger log;

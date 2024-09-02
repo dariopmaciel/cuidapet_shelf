@@ -31,12 +31,14 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i477.AuthController>(
-        () => _i477.AuthController(userService: gh<_i610.IUserService>()));
-    gh.lazySingleton<_i705.IUserServiceImpl>(() =>
-        _i705.IUserServiceImpl(userRepository: gh<_i694.IUserRepository>()));
-    gh.lazySingleton<_i693.IUserRepositoryImpl>(() => _i693.IUserRepositoryImpl(
+    gh.lazySingleton<_i694.IUserRepository>(() => _i693.IUserRepositoryImpl(
           connection: gh<_i77.IDatabaseConnection>(),
+          log: gh<_i742.ILogger>(),
+        ));
+    gh.lazySingleton<_i610.IUserService>(() =>
+        _i705.IUserServiceImpl(userRepository: gh<_i694.IUserRepository>()));
+    gh.factory<_i477.AuthController>(() => _i477.AuthController(
+          userService: gh<_i610.IUserService>(),
           log: gh<_i742.ILogger>(),
         ));
     return this;
