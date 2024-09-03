@@ -4,10 +4,12 @@ import 'package:cuidapet_shelf/modules/user/data/i_user_repository.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/user_save_input_model.dart';
 import 'package:injectable/injectable.dart';
 
-
 import './i_user_service.dart';
 
-@LazySingleton(as: IUserService )
+//service recebe um input model e convert para entidade
+//pega dados converte para entidade e converte para repository...SO ISTO
+
+@LazySingleton(as: IUserService)
 class IUserServiceImpl implements IUserService {
   IUserRepository userRepository;
 
