@@ -6,6 +6,7 @@ import 'package:shelf_router/shelf_router.dart';
 class UserRouter implements IRouter {
   @override
   void configure(Router router) {
+    //o correto é sempre pedir uma instancia
     final authController = GetIt.I.get<AuthController>();
     router.mount('/auth/', authController.router.call);
   }

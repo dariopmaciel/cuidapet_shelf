@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cuidapet_shelf/entities/user.dart';
-import 'package:cuidapet_shelf/modules/user/data_repository/i_user_repository.dart';
+import 'package:cuidapet_shelf/modules/user/data/i_user_repository.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/user_save_input_model.dart';
 import 'package:injectable/injectable.dart';
 

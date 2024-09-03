@@ -31,6 +31,7 @@ class IUserRepositoryImpl implements IUserRepository {
           values(?,?,?,?,?,?,)
       ''';
 
+      // final result = await conn.query(query, <Object?>[ //quando null-safety
       final result = await conn.query(query, [
         user.email,
         user.registerType,
@@ -44,14 +45,14 @@ class IUserRepositoryImpl implements IUserRepository {
       final userId = result.insertId;
       return user.copyWith(id: userId, password: null);
     } on MySqlException catch (e, s) {
-      if (e.message.contains('usuario.email_UNIUE')) {
+      if (e.message.contains('usuario.email_UNIQUE')) {
         log.error('Email já cadastrado na BASE DE DADOS', e, s);
         throw UserExistsException();
       }
       log.error("Erro ao criar usuario", e, s);
       throw DatabaseException(message: 'Erro ao crias usuário', exception: e);
     } finally {
-      conn?.close();
+      await conn?.close();
     }
   }
 }
