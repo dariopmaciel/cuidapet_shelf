@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 
 // import 'package:injectable/injectable.dart';
+import 'package:cuidapet_shelf/modules/user/view_models/login_view_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -23,6 +24,18 @@ class AuthController {
     required this.userService,
     required this.log,
   });
+
+  @Route.post('/')
+  Future<Response> login(Request request) async {
+    final loginViewModel = LoginViewModel(await request.readAsString());
+
+    if (!loginViewModel.socialLogin) {
+      userService.loginWithUserEmailPassword(
+          loginViewModel.login, loginViewModel.password, false);
+    }
+
+    return Response.ok(jsonEncode(''));
+  }
 
 //     '/auth/register'
   @Route.post('/register')
