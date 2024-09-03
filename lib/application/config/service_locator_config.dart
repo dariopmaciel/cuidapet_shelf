@@ -2,14 +2,11 @@ import 'package:cuidapet_shelf/application/config/service_locator_config.config.
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
-// import 'service_locator_config.dart';
+final getIt = GetIt.instance;
 
-
-final getIt = GetIt.instance;  
-  
-@InjectableInit(  
-  initializerName: 'init', // default  
-  preferRelativeImports: true, // default  
-  asExtension: true, // default  
-)  
-void configureDependencies() => getIt.init(); 
+@InjectableInit(
+  initializerName: 'init', // default
+  preferRelativeImports: true, // default
+  asExtension: true, // default
+)
+void configureDependencies() => getIt.init();

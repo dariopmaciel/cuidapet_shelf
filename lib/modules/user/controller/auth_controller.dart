@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-
 // import 'package:injectable/injectable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
@@ -15,7 +14,7 @@ import 'package:cuidapet_shelf/modules/user/view_models/user_save_input_model.da
 
 part 'auth_controller.g.dart';
 
-@ Injectable()//add no getit
+@Injectable()
 class AuthController {
   IUserService userService;
   ILogger log;
@@ -25,6 +24,7 @@ class AuthController {
     required this.log,
   });
 
+//     '/auth/register'
   @Route.post('/register')
   Future<Response> saveUser(Request request) async {
     try {

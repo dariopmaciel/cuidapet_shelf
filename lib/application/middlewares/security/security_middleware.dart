@@ -14,14 +14,12 @@ class SecurityMiddleware extends Middlewares {
 
   final skipUrl = <SecuritySkipUrl>[
     SecuritySkipUrl(
-      // url: '/auth/',
-      // method: 'POST',
-      url: '/hello/',
-      method: 'GET',
-    )
+        // url: '/auth/',
+        // method: 'POST',
+        url: '/auth/register', method: 'POST')
   ];
 
-  SecurityMiddleware( this.log);
+  SecurityMiddleware(this.log);
 
   @override
   Future<Response> execute(Request request) async {
@@ -37,7 +35,8 @@ class SecurityMiddleware extends Middlewares {
       }
 
       final authHeaderContent = authHeader.split(' ');
-      if (authHeaderContent[0] == "Bearer") {
+      //! if (authHeaderContent[0] == "Bearer") {
+      if (authHeaderContent[0] != "Bearer") {
         throw JwtException.invalidToken;
       }
 
