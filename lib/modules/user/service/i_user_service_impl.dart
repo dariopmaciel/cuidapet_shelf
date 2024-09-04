@@ -43,16 +43,21 @@ class IUserServiceImpl implements IUserService {
   Future<User> loginWithSocial(
       String email, String avatar, String socialType, String socialKey) async {
     try {
-      await userRepository.loginByEmailSocialKey(email, socialKey, socialType);
+      // await userRepository.loginByEmailSocialKey(email, socialKey, socialType);
+      return await userRepository.loginByEmailSocialKey(email, socialKey, socialType);
     } on UserNotFoundException catch (e) {
       log.error('Usuario não encontrado, criando um usuario', e);
       final user = User(
         email: email,
         imageAvatar: avatar,
-        registerType: socialType, 
+        registerType: socialType,
         socialKey: socialKey,
-        password: 
+        password: DateTime.now().toString(),
       );
+      // final usuario_criado = await userRepository.createUser(user);
+      // return usuario_criado;
+      //ou
+      return await userRepository.createUser(user);
     }
   }
 }
