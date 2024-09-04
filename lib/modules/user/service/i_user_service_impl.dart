@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:injectable/injectable.dart';
+
+import 'package:cuidapet_shelf/application/exceptions/user_not_found_exception.dart';
+import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:cuidapet_shelf/entities/user.dart';
 import 'package:cuidapet_shelf/modules/user/data/i_user_repository.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/user_save_input_model.dart';
-import 'package:injectable/injectable.dart';
 
 import './i_user_service.dart';
 
@@ -11,9 +14,13 @@ import './i_user_service.dart';
 
 @LazySingleton(as: IUserService)
 class IUserServiceImpl implements IUserService {
+  ILogger log;
   IUserRepository userRepository;
 
-  IUserServiceImpl({required this.userRepository});
+  IUserServiceImpl({
+    required this.log,
+    required this.userRepository,
+  });
 
 //objeto de transferencia de camadas
   @override
@@ -34,6 +41,18 @@ class IUserServiceImpl implements IUserService {
 
   @override
   Future<User> loginWithSocial(
-          String email, String avatar, String socialType, String socialKey) =>
-      userRepository.loginByEmailSocialKey(email, socialKey, socialType);
+      String email, String avatar, String socialType, String socialKey) async {
+    try {
+      await userRepository.loginByEmailSocialKey(email, socialKey, socialType);
+    } on UserNotFoundException catch (e) {
+      log.error('Usuario não encontrado, criando um usuario', e);
+      final user = User(
+        email: email,
+        imageAvatar: avatar,
+        registerType: socialType, 
+        socialKey: socialKey,
+        password: 
+      );
+    }
+  }
 }
