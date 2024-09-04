@@ -104,4 +104,9 @@ class IUserRepositoryImpl implements IUserRepository {
       await conn?.close();
     }
   }
+  
+  @override
+  Future<User> loginByEmailSocialKey(String email, String socialKey, String socialType) {
+    MySqlConnection? conn;
+  }
 }
