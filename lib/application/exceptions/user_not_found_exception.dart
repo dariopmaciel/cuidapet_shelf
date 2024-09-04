@@ -3,9 +3,9 @@
 //   //
 // }
 
-class UserNotFoundExceptionCopy implements Exception {
+class UserNotFoundException implements Exception {
   String message;
-  UserNotFoundExceptionCopy({
+  UserNotFoundException({
     required this.message,
   });
 }

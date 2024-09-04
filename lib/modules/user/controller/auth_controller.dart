@@ -3,6 +3,9 @@ import 'dart:async';
 import 'dart:convert';
 
 // import 'package:injectable/injectable.dart';
+import 'package:cuidapet_shelf/application/exceptions/user_not_found_exception.dart';
+import 'package:cuidapet_shelf/application/helpers/jwt_helper.dart';
+import 'package:cuidapet_shelf/entities/user.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/login_view_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
@@ -27,14 +30,34 @@ class AuthController {
 
   @Route.post('/')
   Future<Response> login(Request request) async {
-    final loginViewModel = LoginViewModel(await request.readAsString());
+    try {
+      final loginViewModel = LoginViewModel(await request.readAsString());
 
-    if (!loginViewModel.socialLogin) {
-      userService.loginWithUserEmailPassword(
-          loginViewModel.login, loginViewModel.password, false);
+      User user;
+
+      if (!loginViewModel.socialLogin) {
+        user = await userService.loginWithUserEmailPassword(
+            loginViewModel.login,
+            loginViewModel.password,
+            loginViewModel.supplierUser);
+      } else {
+        //social login(facebook, google , apple)
+        user = User();
+      }
+
+      return Response.ok(
+        jsonEncode(
+          {'access_token': JwtHelper.generateJWT(user.id!, user.supplierId)},
+        ),
+      );
+    } on UserNotFoundException {
+      return Response.forbidden(
+          jsonEncode({'message': 'Usuário ou senha invalidos!'}));
+    } catch (e, s) {
+      log.error("Erro ao fazer login", e, s);
+      return Response.internalServerError(
+          body: jsonEncode({'message': 'Erro ao realizar login.'}));
     }
-
-    return Response.ok(jsonEncode(''));
   }
 
 //     '/auth/register'

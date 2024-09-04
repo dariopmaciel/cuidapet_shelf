@@ -2,7 +2,7 @@
 import 'package:cuidapet_shelf/application/database/i_database_connection.dart';
 import 'package:cuidapet_shelf/application/exceptions/database_exception.dart';
 import 'package:cuidapet_shelf/application/exceptions/user_exists_exception.dart';
-import 'package:cuidapet_shelf/application/exceptions/user_not_found_exception%20copy.dart';
+import 'package:cuidapet_shelf/application/exceptions/user_not_found_exception.dart';
 import 'package:cuidapet_shelf/application/helpers/cripty_helper.dart';
 import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:cuidapet_shelf/entities/user.dart';
@@ -83,7 +83,7 @@ class IUserRepositoryImpl implements IUserRepository {
 
       if (result.isEmpty) {
         log.error("Usuario ou senha INVÁLIDOS");
-        throw UserNotFoundExceptionCopy(message: 'Usuário ou senha inválidos');
+        throw UserNotFoundException(message: 'Usuário ou senha inválidos');
       } else {
         final userSqlData = result.first;
         return User(
