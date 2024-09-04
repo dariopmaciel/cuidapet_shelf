@@ -104,9 +104,45 @@ class IUserRepositoryImpl implements IUserRepository {
       await conn?.close();
     }
   }
-  
+
   @override
-  Future<User> loginByEmailSocialKey(String email, String socialKey, String socialType) {
+  Future<User> loginByEmailSocialKey(
+      String email, String socialKey, String socialType) async {
     MySqlConnection? conn;
+
+    try {
+      conn = await connection.openConnection();
+      final result =
+          await conn.query('select * from usuario wherer email = ?', [email]);
+      if (result.isEmpty) {
+        throw UserNotFoundException(message: "Usuario não encontrado!");
+      } else {
+        final dataMySql = result.first;
+        if (dataMySql['social_id'] == null ||
+            dataMySql['social_id'] != socialKey) {
+          await conn.query('''
+            update usuario 
+            set social_id = ?, tipo_cadastro = ? 
+            where id = ? 
+            ''', [
+            socialKey,
+            socialType,
+            dataMySql['id'],
+          ]);
+        }
+        return User(
+          id: dataMySql['id'] as int,
+          email: dataMySql['email'],
+          registerType: dataMySql['tipo_cadastro'],
+          iosToken: (dataMySql['ios_token'] as Blob?)?.toString(),
+          androidToken: (dataMySql['android_token'] as Blob?)?.toString(),
+          refreshToken: (dataMySql['refresh_token'] as Blob?)?.toString(),
+          imageAvatar: (dataMySql['img_avatar'] as Blob?)?.toString(),
+          supplierId: dataMySql['fornecedor_id'],
+        );
+      }
+    } finally {
+      await conn?.close();
+    }
   }
 }
