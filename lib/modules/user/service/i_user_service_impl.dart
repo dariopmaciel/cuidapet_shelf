@@ -31,4 +31,9 @@ class IUserServiceImpl implements IUserService {
   Future<User> loginWithUserEmailPassword(
           String email, String password, bool supplierUser) =>
       userRepository.loginWithUserEmailPassword(email, password, supplierUser);
+
+  @override
+  Future<User> loginWithSocial(
+          String email, String avatar, String socialType, String socialKey) =>
+      userRepository.loginByEmailSocialKey(email, socialKey, socialType);
 }
