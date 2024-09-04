@@ -113,7 +113,7 @@ class IUserRepositoryImpl implements IUserRepository {
     try {
       conn = await connection.openConnection();
       final result =
-          await conn.query('select * from usuario wherer email = ?', [email]);
+          await conn.query('select * from usuario where email = ?', [email]);
       if (result.isEmpty) {
         throw UserNotFoundException(message: "Usuario não encontrado!");
       } else {

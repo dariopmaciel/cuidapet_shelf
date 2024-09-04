@@ -44,7 +44,8 @@ class IUserServiceImpl implements IUserService {
       String email, String avatar, String socialType, String socialKey) async {
     try {
       // await userRepository.loginByEmailSocialKey(email, socialKey, socialType);
-      return await userRepository.loginByEmailSocialKey(email, socialKey, socialType);
+      return await userRepository.loginByEmailSocialKey(
+          email, socialKey, socialType);
     } on UserNotFoundException catch (e) {
       log.error('Usuario não encontrado, criando um usuario', e);
       final user = User(
