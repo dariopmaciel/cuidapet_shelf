@@ -30,7 +30,7 @@ class JwtHelper {
     final claimSet = JwtClaim(
       issuer: accessToken,
       subject: 'RefreshToken',
-      expiry: DateTime.now().add(Duration(days: 21)),
+      expiry: DateTime.now().add(Duration(days: 20)),
       notBefore: DateTime.now(),
       issuedAt: DateTime.now(),
       otherClaims: <String, dynamic>{},

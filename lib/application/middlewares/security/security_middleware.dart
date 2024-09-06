@@ -28,6 +28,7 @@ class SecurityMiddleware extends Middlewares {
       }
 //segundo passo
       final authHeader = request.headers['Authorization'];
+      
       if (authHeader == null || authHeader.isEmpty) {
         throw JwtException.invalidToken;
       }

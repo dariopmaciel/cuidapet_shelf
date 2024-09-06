@@ -6,11 +6,14 @@ class UserConfirmInputModel extends RequestMapping {
   int userId;
   String accessToken;
   //inicializados depois
-  late String iosDeviceToken;
-  late String androidDeviceToken;
-  UserConfirmInputModel(
-      {required this.userId, required this.accessToken, required String data})
-      : super(data);
+  late String? iosDeviceToken;
+  late String? androidDeviceToken;
+  
+  UserConfirmInputModel({
+    required this.userId,
+    required this.accessToken,
+    required String data,
+  }) : super(data);
 
   @override
   void map() {

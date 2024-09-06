@@ -66,14 +66,14 @@ class IUserServiceImpl implements IUserService {
 
   @override
   Future<String> confirmLogin(UserConfirmInputModel inputModel) async {
-    final refreshToken = JwtHelper.refreshToken(inputModel.accessToken);
+    
     final user = User(
       id: inputModel.userId,
-      refreshToken: refreshToken,
+      refreshToken: JwtHelper.refreshToken(inputModel.accessToken),
       iosToken: inputModel.iosDeviceToken,
       androidToken: inputModel.androidDeviceToken,
     );
     await userRepository.updateUserDeviceTokenAndRefreshToken(user);
-    return refreshToken;
+    return user.refreshToken!;
   }
 }
