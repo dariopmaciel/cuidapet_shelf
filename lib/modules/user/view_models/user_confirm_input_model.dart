@@ -14,6 +14,7 @@ class UserConfirmInputModel extends RequestMapping {
 
   @override
   void map() {
-    //
+    iosDeviceToken = data['ios_token'];
+    androidDeviceToken = data['android_token'];
   }
 }
