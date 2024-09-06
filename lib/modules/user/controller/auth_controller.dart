@@ -89,7 +89,7 @@ class AuthController {
     final user = int.parse(request.headers['user']!);
     final supplier = int.tryParse(request.headers['supplier'] ?? '');
     final token =
-        JwtHelper.generateJWT(user, supplier).replaceAll('Bearer', '');
+        JwtHelper.generateJWT(user, supplier).replaceAll('Bearer ', '');
     final inputModel = UserConfirmInputModel(
       userId: user,
       accessToken: token,
