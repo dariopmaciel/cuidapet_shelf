@@ -145,4 +145,19 @@ class IUserRepositoryImpl implements IUserRepository {
       await conn?.close();
     }
   }
+
+  @override
+  Future<void> updateUserDeviceTokenAndRefreshToken(User user) async {
+    MySqlConnection? conn;
+    try {
+      conn = await connection.openConnection();
+      // receber um dos dois tipos de token IOSTOKEN OU ANDROIDTOKEN
+      
+
+
+
+    } finally {
+      await conn?.close();
+    }
+  }
 }
