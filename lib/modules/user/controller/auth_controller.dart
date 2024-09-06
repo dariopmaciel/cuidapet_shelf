@@ -84,10 +84,10 @@ class AuthController {
   }
 
 
-@Route.('PATCH','/confirm')
-Future<Response> (Request request) async{
-   return Response.ok(jsonEncode(''));
-}
+// @Route.('PATCH','/confirm')
+// Future<Response> (Request request) async{
+//    return Response.ok(jsonEncode(''));
+// }
 
 
 

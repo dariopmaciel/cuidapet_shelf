@@ -151,11 +151,32 @@ class IUserRepositoryImpl implements IUserRepository {
     MySqlConnection? conn;
     try {
       conn = await connection.openConnection();
+      final setParams = {};
       // receber um dos dois tipos de token IOSTOKEN OU ANDROIDTOKEN
-      
+      if (user.iosToken != null) {
+        //se for acesso por ios
+        setParams.putIfAbsent('ios_token', () => user.iosToken);
+      } else {
+        //se for acessopor android
+        setParams.putIfAbsent('android_token', () => user.androidToken);
+      }
 
-
-
+      final query = '''
+        update usuario
+        set
+          ${setParams.keys.elementAt(0)} = ?,
+          refresh_token = ?
+        where
+          id = ?
+      ''';
+      await conn.query(query, [
+        setParams.values.elementAt(0),
+        user.refreshToken!,
+        user.id,
+      ]);
+    } on MySqlException catch (e, s) {
+      log.error("Erro ao confirmar login", e, s);
+      throw DatabaseException();
     } finally {
       await conn?.close();
     }
