@@ -181,4 +181,19 @@ class IUserRepositoryImpl implements IUserRepository {
       await conn?.close();
     }
   }
+
+  @override
+  Future<void> updateRefreshToken(User user) async {
+    MySqlConnection? conn;
+    try {
+      conn = await connection.openConnection();
+
+      await conn.query('update usuario ser refresh_token = ? where id = ?', [
+        user.refreshToken!,
+        user.id!,
+      ]);
+    } finally {
+      await conn?.close();
+    }
+  }
 }
