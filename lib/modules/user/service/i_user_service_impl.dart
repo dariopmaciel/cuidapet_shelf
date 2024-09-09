@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cuidapet_shelf/application/exceptions/service_exception.dart';
 import 'package:cuidapet_shelf/application/helpers/jwt_helper.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/refresh_token_view_model.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/user_confirm_input_model.dart';
@@ -10,6 +11,7 @@ import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:cuidapet_shelf/entities/user.dart';
 import 'package:cuidapet_shelf/modules/user/data/i_user_repository.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/user_save_input_model.dart';
+import 'package:jaguar_jwt/jaguar_jwt.dart';
 
 import './i_user_service.dart';
 
@@ -68,7 +70,6 @@ class IUserServiceImpl implements IUserService {
 
   @override
   Future<String> confirmLogin(UserConfirmInputModel inputModel) async {
-    
     final user = User(
       id: inputModel.userId,
       refreshToken: JwtHelper.refreshToken(inputModel.accessToken),
@@ -81,12 +82,32 @@ class IUserServiceImpl implements IUserService {
 
   @override
   Future<RefreshTokenViewModel> refreshToken(UserRefreshTokenInputModel model) {
+    //
     _validateRefreshToken(model);
+    final newAccessToken = JwtHelper.generateJWT(model.user, model.supplier);
+    // mandando SOMENTE O TOKEN sem o 'BEARER'
+    final newRefreshToken =
+        JwtHelper.refreshToken(newAccessToken.replaceAll('Bearer', ''));
   }
-  
+
   void _validateRefreshToken(UserRefreshTokenInputModel model) {
-    //verificar se o token está valido
-    final refreshToken = model.refresToken.split(' ');
-    
+    try {
+      // pega somente domente o token sem o "BEARER" cortando no espaço ente eles
+      final refreshToken = model.refresToken.split(' ');
+      if (refreshToken.length != 2 || refreshToken.first != 'Bearer') {
+        log.error("Refresh Token INVÁLIDO");
+        throw ServiceException(message: 'Refresh Token INVÁLIDO');
+      }
+      final refreshTokenClaim = JwtHelper.getClaims(refreshToken.last);
+
+      refreshTokenClaim.validate(issuer: model.accessToken);
+    } on ServiceException {
+      rethrow;
+    } on JwtException {
+      log.error("Refresh Token INVÁLIDO");
+      throw ServiceException(message: 'REFRESH TOKEN INVÁLIDO');
+    } catch (e) {
+      throw ServiceException(message: "Erro ao validar refresh Token.");
+    }
   }
 }
