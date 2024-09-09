@@ -81,13 +81,19 @@ class IUserServiceImpl implements IUserService {
   }
 
   @override
-  Future<RefreshTokenViewModel> refreshToken(UserRefreshTokenInputModel model) {
+  Future<RefreshTokenViewModel> refreshToken(
+      UserRefreshTokenInputModel model) async {
     //
     _validateRefreshToken(model);
     final newAccessToken = JwtHelper.generateJWT(model.user, model.supplier);
     // mandando SOMENTE O TOKEN sem o 'BEARER'
     final newRefreshToken =
         JwtHelper.refreshToken(newAccessToken.replaceAll('Bearer', ''));
+    final user = User(
+      id: model.user,
+      refreshToken: newRefreshToken,
+    );
+    await userRepository.updateRefreshToken(user);
   }
 
   void _validateRefreshToken(UserRefreshTokenInputModel model) {
