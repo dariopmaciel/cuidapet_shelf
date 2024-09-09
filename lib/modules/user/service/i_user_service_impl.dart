@@ -94,6 +94,10 @@ class IUserServiceImpl implements IUserService {
       refreshToken: newRefreshToken,
     );
     await userRepository.updateRefreshToken(user);
+    return RefreshTokenViewModel(
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+    );
   }
 
   void _validateRefreshToken(UserRefreshTokenInputModel model) {
