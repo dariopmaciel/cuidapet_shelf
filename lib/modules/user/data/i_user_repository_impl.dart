@@ -208,16 +208,8 @@ class IUserRepositoryImpl implements IUserRepository {
 
       //OU
       final result = await conn.query('''
-        select 
-          id, 
-          email, 
-          tipo_cadastro, 
-          ios_token, 
-          android_token, 
-          refresh_token, 
-          img_avatar, 
-          fornecedor_id,
-        form usuario
+        select id, email, tipo_cadastro, ios_token, android_token, refresh_token, img_avatar,       fornecedor_id
+        from usuario
         where id = ? 
         ''', [id]);
       if (result.isEmpty) {

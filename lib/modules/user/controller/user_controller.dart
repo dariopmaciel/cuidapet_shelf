@@ -34,7 +34,7 @@ class UserController {
         'img_avatar': userData.imageAvatar,
       }));
     } on UserNotFoundException {
-      return Response.notFound(jsonEncode(""));
+      return Response(204, body:jsonEncode(''));
     } catch (e, s) {
       log.error("Erro ao buscar usuario", e, s);
       return Response.internalServerError(
