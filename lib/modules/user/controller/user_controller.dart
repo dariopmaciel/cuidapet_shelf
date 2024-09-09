@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cuidapet_shelf/modules/user/view_models/update_url_avatar_view_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -34,12 +35,20 @@ class UserController {
         'img_avatar': userData.imageAvatar,
       }));
     } on UserNotFoundException {
-      return Response(204, body:jsonEncode(''));
+      return Response(204, body: jsonEncode(''));
     } catch (e, s) {
       log.error("Erro ao buscar usuario", e, s);
       return Response.internalServerError(
           body: jsonEncode({"message": "Erro ao buscar usuario"}));
     }
+  }
+
+  @Route.put('/avatar')
+  Future<Response> updateAvatar(Request request) async {
+    final userId = int.parse(request.headers['user']!);
+    final updateUrlAvatar = UpdateUrlAvatarViewModel(
+        userId: userId, dataRequest: await request.readAsString());
+    return Response.ok(jsonEncode(''));
   }
 
   Router get router => _$UserControllerRouter(this);
