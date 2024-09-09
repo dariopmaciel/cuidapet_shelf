@@ -8,6 +8,7 @@ import 'package:cuidapet_shelf/application/helpers/jwt_helper.dart';
 import 'package:cuidapet_shelf/entities/user.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/login_view_model.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/user_confirm_input_model.dart';
+import 'package:cuidapet_shelf/modules/user/view_models/user_refresh_token_input_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -105,7 +106,26 @@ class AuthController {
 
   @Route.put('/refresh')
   Future<Response> refreshToken(Request request) async {
-    return Response.ok(jsonEncode(''));
+    try {
+      final user = int.parse(request.headers['user']!);
+      final supplier = int.tryParse(request.headers['supplier'] ?? "");
+      final accessToken = request.headers['access_token']!;
+
+      final model = UserRefreshTokenInputModel(
+        user: user,
+        accessToken: accessToken,
+        supplier: supplier,
+        dataRequest: await request.readAsString(),
+      );
+      final userRefreshToken = await userService.refreshToken(model);
+      return Response.ok(jsonEncode({
+        'access_token': userRefreshToken.accessToken,
+        'refresh_token': userRefreshToken.refreshToken,
+      }));
+    } catch (e) {
+      return Response.internalServerError(
+          body: jsonEncode({'message': "Erro ao atualizar accessToken"}));
+    }
   }
 
   Router get router => _$AuthControllerRouter(this);
