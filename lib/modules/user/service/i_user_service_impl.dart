@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cuidapet_shelf/application/helpers/jwt_helper.dart';
+import 'package:cuidapet_shelf/modules/user/view_models/refresh_token_view_model.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/user_confirm_input_model.dart';
+import 'package:cuidapet_shelf/modules/user/view_models/user_refresh_token_input_model.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:cuidapet_shelf/application/exceptions/user_not_found_exception.dart';
@@ -75,5 +77,16 @@ class IUserServiceImpl implements IUserService {
     );
     await userRepository.updateUserDeviceTokenAndRefreshToken(user);
     return user.refreshToken!;
+  }
+
+  @override
+  Future<RefreshTokenViewModel> refreshToken(UserRefreshTokenInputModel model) {
+    _validateRefreshToken(model);
+  }
+  
+  void _validateRefreshToken(UserRefreshTokenInputModel model) {
+    //verificar se o token está valido
+    final refreshToken = model.refresToken.split(' ');
+    
   }
 }

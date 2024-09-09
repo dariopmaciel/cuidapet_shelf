@@ -188,7 +188,7 @@ class IUserRepositoryImpl implements IUserRepository {
     try {
       conn = await connection.openConnection();
 
-      await conn.query('update usuario ser refresh_token = ? where id = ?', [
+      await conn.query('update usuario set refresh_token = ? where id = ?', [
         user.refreshToken!,
         user.id!,
       ]);

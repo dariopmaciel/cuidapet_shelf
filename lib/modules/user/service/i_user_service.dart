@@ -1,5 +1,7 @@
 import 'package:cuidapet_shelf/entities/user.dart';
+import 'package:cuidapet_shelf/modules/user/view_models/refresh_token_view_model.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/user_confirm_input_model.dart';
+import 'package:cuidapet_shelf/modules/user/view_models/user_refresh_token_input_model.dart';
 import 'package:cuidapet_shelf/modules/user/view_models/user_save_input_model.dart';
 
 //
@@ -10,7 +12,7 @@ abstract interface class IUserService {
   Future<User> loginWithSocial(
       String email, String avatar, String socialType, String socialKey);
   Future<String> confirmLogin(UserConfirmInputModel inputModel);
-// Future<> refreshToken();
+Future<RefreshTokenViewModel> refreshToken(UserRefreshTokenInputModel model);
 
 
 }
