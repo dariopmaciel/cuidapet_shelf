@@ -10,13 +10,13 @@ class JwtHelper {
     final claimSet = JwtClaim(
       issuer: 'cuidapet',
       subject: userId.toString(),
-      // expiry: DateTime.now().add(Duration(days: 1)),
-      expiry: DateTime.now().add(Duration(seconds: 20)),
+      expiry: DateTime.now().add(Duration(days: 1)),
+      // expiry: DateTime.now().add(Duration(seconds: 20)),
       notBefore: DateTime.now(),
       issuedAt: DateTime.now(),
       otherClaims: <String, dynamic>{'supplier': supplierId},
-      // maxAge: Duration(days: 1),
-      maxAge: Duration(seconds: 1),
+      maxAge: Duration(days: 1),
+      // maxAge: Duration(seconds: 1),
     );
     // final token = 'Bearer ${issueJwtHS256(claimSet, _jwtSecret)}';
     // return token;
@@ -33,7 +33,7 @@ class JwtHelper {
       issuer: accessToken,
       subject: 'RefreshToken',
       expiry: DateTime.now().add(Duration(days: 20)),
-      // notBefore: DateTime.now(),
+      notBefore: DateTime.now(),
       // notBefore: DateTime.now().add(Duration(hours: 12)),
       issuedAt: DateTime.now(),
       otherClaims: <String, dynamic>{},
