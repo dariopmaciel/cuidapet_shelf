@@ -33,7 +33,6 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i983.UserController>(() => _i983.UserController());
     gh.factory<_i77.IDatabaseConnection>(() => _i795.IDatabaseConnectionImpl(
         gh<_i32.DatabaseConnectionConfiguration>()));
     gh.lazySingleton<_i872.IUserRepository>(() => _i1014.IUserRepositoryImpl(
@@ -45,6 +44,10 @@ extension GetItInjectableX on _i174.GetIt {
           userRepository: gh<_i872.IUserRepository>(),
         ));
     gh.factory<_i477.AuthController>(() => _i477.AuthController(
+          userService: gh<_i610.IUserService>(),
+          log: gh<_i742.ILogger>(),
+        ));
+    gh.factory<_i983.UserController>(() => _i983.UserController(
           userService: gh<_i610.IUserService>(),
           log: gh<_i742.ILogger>(),
         ));

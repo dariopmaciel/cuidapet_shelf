@@ -113,11 +113,14 @@ class IUserServiceImpl implements IUserService {
       refreshTokenClaim.validate(issuer: model.accessToken);
     } on ServiceException {
       rethrow;
-    } on JwtException catch(e, s)  {
+    } on JwtException catch (e, s) {
       log.error("Refresh Token INVÁLIDO", e, s);
       throw ServiceException(message: 'REFRESH TOKEN INVÁLIDO');
     } catch (e) {
       throw ServiceException(message: "Erro ao validar refresh Token.");
     }
   }
+
+  @override
+  Future<User> findById(int id) => userRepository.findById(id);
 }
