@@ -9,4 +9,5 @@ abstract interface class IUserRepository {
       String email, String socialKey, String socialType);
   Future<void> updateUserDeviceTokenAndRefreshToken(User user);
   Future<void> updateRefreshToken(User user);
+  Future<User> findById(int id);
 }

@@ -12,6 +12,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../modules/user/controller/auth_controller.dart' as _i477;
+import '../../modules/user/controller/user_controller.dart' as _i983;
 import '../../modules/user/data/i_user_repository.dart' as _i872;
 import '../../modules/user/data/i_user_repository_impl.dart' as _i1014;
 import '../../modules/user/service/i_user_service.dart' as _i610;
@@ -32,6 +33,7 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    gh.factory<_i983.UserController>(() => _i983.UserController());
     gh.factory<_i77.IDatabaseConnection>(() => _i795.IDatabaseConnectionImpl(
         gh<_i32.DatabaseConnectionConfiguration>()));
     gh.lazySingleton<_i872.IUserRepository>(() => _i1014.IUserRepositoryImpl(

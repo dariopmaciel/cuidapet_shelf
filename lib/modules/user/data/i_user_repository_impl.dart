@@ -196,4 +196,49 @@ class IUserRepositoryImpl implements IUserRepository {
       await conn?.close();
     }
   }
+
+  @override
+  Future<User> findById(int id) async {
+    MySqlConnection? conn;
+    try {
+      conn = await connection.openConnection();
+
+      // conn.query('''
+      // select *  form usuario where id = ? ''');
+
+      //OU
+      final result = await conn.query('''
+        select 
+          id, 
+          email, 
+          tipo_cadastro, 
+          ios_token, 
+          android_token, 
+          refresh_token, 
+          img_avatar, 
+          fornecedor_id,
+        form usuario
+        where id = ? 
+        ''', [id]);
+      if (result.isEmpty) {
+        log.error("Usuario NÃO encontrado com o ID{$id}");
+        throw UserNotFoundException(
+            message: "Usuario NÃO encontrado com o ID{$id}");
+      } else {
+        final dataMySql = result.first;
+        return User(
+          id: dataMySql['id'] as int,
+          email: dataMySql['email'],
+          registerType: dataMySql['tipo_cadastro'],
+          iosToken: (dataMySql['ios_token'] as Blob?)?.toString(),
+          androidToken: (dataMySql['android_token'] as Blob?)?.toString(),
+          refreshToken: (dataMySql['refresh_token'] as Blob?)?.toString(),
+          imageAvatar: (dataMySql['img_avatar'] as Blob?)?.toString(),
+          supplierId: dataMySql['fornecedor_id'],
+        );
+      }
+    } finally {
+      await conn?.close();
+    }
+  }
 }
