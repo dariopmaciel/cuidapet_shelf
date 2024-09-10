@@ -46,8 +46,9 @@ class UserController {
   @Route.put('/avatar')
   Future<Response> updateAvatar(Request request) async {
     final userId = int.parse(request.headers['user']!);
-    final updateUrlAvatar = UpdateUrlAvatarViewModel(
+    final updateUrlAvatarViewModel = UpdateUrlAvatarViewModel(
         userId: userId, dataRequest: await request.readAsString());
+
     return Response.ok(jsonEncode(''));
   }
 

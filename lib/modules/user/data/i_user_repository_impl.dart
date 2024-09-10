@@ -241,4 +241,17 @@ class IUserRepositoryImpl implements IUserRepository {
       await conn?.close();
     }
   }
+
+  @override
+  Future<void> updateUrlAvatar(int id, String urlAvatar) async {
+    MySqlConnection? conn;
+    try {
+      conn = await connection.openConnection();
+      await conn.query('');
+
+
+    } finally {
+      await conn?.close();
+    }
+  }
 }
