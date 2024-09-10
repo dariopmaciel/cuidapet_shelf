@@ -98,7 +98,7 @@ class IUserRepositoryImpl implements IUserRepository {
         );
       }
     } on MySqlException catch (e, s) {
-      log.error("Erro ao realizar login", e, s);
+      log.error("Erro ao realizar login COM USUARIO E PASSWORD", e, s);
       throw DatabaseException(message: e.message);
     } finally {
       await conn?.close();
@@ -141,6 +141,9 @@ class IUserRepositoryImpl implements IUserRepository {
           supplierId: dataMySql['fornecedor_id'],
         );
       }
+    } on MySqlException catch (e, s) {
+      log.error("Erro ao realizar LOGIN com REDE SOCIAL", e, s);
+      throw DatabaseException(message: "Erro ao realizar LOGIN com REDE SOCIAL");
     } finally {
       await conn?.close();
     }
@@ -192,6 +195,9 @@ class IUserRepositoryImpl implements IUserRepository {
         user.refreshToken!,
         user.id!,
       ]);
+    } on MySqlException catch (e, s) {
+      log.error("Erro ao atualizar RefreshToken", e, s);
+      throw DatabaseException(message: "Erro ao atualizar RefreshToken");
     } finally {
       await conn?.close();
     }
