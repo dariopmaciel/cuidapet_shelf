@@ -68,12 +68,17 @@ class UserController {
 
   @Route.put('/device')
   Future<Response> updateDeviceToken(Request request) async {
-    final updateDeviceToken = UserUpdateDeviceInputModel(
-      userId: int.parse(request.headers['user']!),
-      dataRequest: await request.readAsString(),
-    );
-
-    return Response.ok(jsonEncode(''));
+    try {
+      final updateDeviceToken = UserUpdateDeviceInputModel(
+        userId: int.parse(request.headers['user']!),
+        dataRequest: await request.readAsString(),
+      );
+      await userService.updateDeviceToken(updateDeviceToken);
+      return Response.ok(jsonEncode({}));
+    } catch (e, s) {
+      log.error("Erro ao atualizar o DEVICE TOKEN", e, s);
+      return Response.internalServerError();
+    }
   }
 
   Router get router => _$UserControllerRouter(this);
