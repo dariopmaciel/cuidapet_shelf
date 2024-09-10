@@ -247,9 +247,13 @@ class IUserRepositoryImpl implements IUserRepository {
     MySqlConnection? conn;
     try {
       conn = await connection.openConnection();
-      await conn.query('');
-
-
+      await conn.query('update usuario set img_avatar = ? where id = ?', [
+        urlAvatar,
+        id,
+      ]);
+    } on MySqlException catch (e, s) {
+      log.error("Erro ao atualizar AVATAR", e, s);
+      throw DatabaseException(message: "Erro ao atualizar AVATAR");
     } finally {
       await conn?.close();
     }
