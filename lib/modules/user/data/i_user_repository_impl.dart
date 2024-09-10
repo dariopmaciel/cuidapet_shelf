@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:cuidapet_shelf/application/database/i_database_connection.dart';
 import 'package:cuidapet_shelf/application/exceptions/database_exception.dart';
 import 'package:cuidapet_shelf/application/exceptions/user_exists_exception.dart';
@@ -143,7 +145,8 @@ class IUserRepositoryImpl implements IUserRepository {
       }
     } on MySqlException catch (e, s) {
       log.error("Erro ao realizar LOGIN com REDE SOCIAL", e, s);
-      throw DatabaseException(message: "Erro ao realizar LOGIN com REDE SOCIAL");
+      throw DatabaseException(
+          message: "Erro ao realizar LOGIN com REDE SOCIAL");
     } finally {
       await conn?.close();
     }
@@ -263,6 +266,28 @@ class IUserRepositoryImpl implements IUserRepository {
     } on MySqlException catch (e, s) {
       log.error("Erro ao atualizar AVATAR", e, s);
       throw DatabaseException(message: "Erro ao atualizar AVATAR");
+    } finally {
+      await conn?.close();
+    }
+  }
+
+  @override
+  Future<void> updateDeviceToken(
+      int id, String token, Platform platform) async {
+    MySqlConnection? conn;
+    try {
+      conn = await connection.openConnection();
+      var set = '';
+      if (platform == Platform.isIOS) {
+        set = 'ios_token = ?';
+      } else {
+        set = 'android_token = ?';
+      }
+      final query = 'update usuario set $set where id = ? ';
+      await conn.query(query, [token, id]);
+    } on MySqlException catch (e, s) {
+      log.error("Erro ao atualizar o DEVICE TOKE", e, s);
+      throw DatabaseException(message: "Erro ao atualizar o DEVICE TOKE");
     } finally {
       await conn?.close();
     }

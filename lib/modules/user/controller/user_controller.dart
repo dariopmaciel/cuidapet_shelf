@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cuidapet_shelf/modules/user/view_models/update_url_avatar_view_model.dart';
+import 'package:cuidapet_shelf/modules/user/view_models/user_update_device_input_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -63,6 +64,16 @@ class UserController {
       return Response.internalServerError(
           body: {'message': 'Erro ao atualizar Avaaaaatar'});
     }
+  }
+
+  @Route.put('/device')
+  Future<Response> updateDeviceToken(Request request) async {
+    final updateDeviceToken = UserUpdateDeviceInputModel(
+      userId: int.parse(request.headers['user']!),
+      dataRequest: await request.readAsString(),
+    );
+
+    return Response.ok(jsonEncode(''));
   }
 
   Router get router => _$UserControllerRouter(this);
