@@ -1,4 +1,4 @@
-import 'package:cuidapet_shelf/modules/categories/categories_routers.dart';
+import 'package:cuidapet_shelf/modules/category/categories_routers.dart';
 import 'package:cuidapet_shelf/modules/user/user_router.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:cuidapet_shelf/application/routes/i_router.dart';

@@ -10,7 +10,7 @@ part 'categories_controller.g.dart';
 class CategoriesController {
 
    @Route.get('/')
-   Future<Response> find(Request request) async { 
+   Future<Response> findAll(Request request) async { 
       return Response.ok(jsonEncode({"message":"Hello Categories"}));
    }
 

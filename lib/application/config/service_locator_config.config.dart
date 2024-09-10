@@ -11,13 +11,11 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
-import '../../modules/categories/controller/categories_controller.dart' as _i55;
-import '../../modules/categories/data/i_categories_repository.dart' as _i870;
-import '../../modules/categories/data/i_categories_repository_impl.dart'
-    as _i947;
-import '../../modules/categories/service/i_categories_service.dart' as _i803;
-import '../../modules/categories/service/i_categories_service_impl.dart'
-    as _i465;
+import '../../modules/category/controller/categories_controller.dart' as _i400;
+import '../../modules/category/data/i_categories_repository.dart' as _i57;
+import '../../modules/category/data/i_categories_repository_impl.dart' as _i724;
+import '../../modules/category/service/i_categories_service.dart' as _i967;
+import '../../modules/category/service/i_categories_service_impl.dart' as _i191;
 import '../../modules/user/controller/auth_controller.dart' as _i477;
 import '../../modules/user/controller/user_controller.dart' as _i983;
 import '../../modules/user/data/i_user_repository.dart' as _i872;
@@ -40,17 +38,18 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i55.CategoriesController>(() => _i55.CategoriesController());
-    gh.lazySingleton<_i803.ICategoriesService>(
-        () => _i465.ICategoriesServiceImpl());
-    gh.lazySingleton<_i870.ICategoriesRepository>(
-        () => _i947.ICategoriesRepositoryImpl());
+    gh.factory<_i400.CategoriesController>(() => _i400.CategoriesController());
     gh.factory<_i77.IDatabaseConnection>(() => _i795.IDatabaseConnectionImpl(
         gh<_i32.DatabaseConnectionConfiguration>()));
     gh.lazySingleton<_i872.IUserRepository>(() => _i1014.IUserRepositoryImpl(
           connection: gh<_i77.IDatabaseConnection>(),
           log: gh<_i742.ILogger>(),
         ));
+    gh.lazySingleton<_i57.ICategoriesRepository>(
+        () => _i724.ICategoriesRepositoryImpl(
+              connection: gh<_i77.IDatabaseConnection>(),
+              log: gh<_i742.ILogger>(),
+            ));
     gh.lazySingleton<_i610.IUserService>(() => _i705.IUserServiceImpl(
           log: gh<_i742.ILogger>(),
           userRepository: gh<_i872.IUserRepository>(),
@@ -63,6 +62,9 @@ extension GetItInjectableX on _i174.GetIt {
           userService: gh<_i610.IUserService>(),
           log: gh<_i742.ILogger>(),
         ));
+    gh.lazySingleton<_i967.ICategoriesService>(() =>
+        _i191.ICategoriesServiceImpl(
+            repository: gh<_i57.ICategoriesRepository>()));
     return this;
   }
 }
