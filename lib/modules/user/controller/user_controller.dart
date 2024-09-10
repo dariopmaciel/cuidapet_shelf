@@ -45,11 +45,24 @@ class UserController {
 
   @Route.put('/avatar')
   Future<Response> updateAvatar(Request request) async {
-    final userId = int.parse(request.headers['user']!);
-    final updateUrlAvatarViewModel = UpdateUrlAvatarViewModel(
-        userId: userId, dataRequest: await request.readAsString());
+    try {
+      final userId = int.parse(request.headers['user']!);
+      final updateUrlAvatarViewModel = UpdateUrlAvatarViewModel(
+        userId: userId,
+        dataRequest: await request.readAsString(),
+      );
 
-    return Response.ok(jsonEncode(''));
+      final user = await userService.updateAvatar(updateUrlAvatarViewModel);
+
+      return Response.ok(jsonEncode({
+        'email': user.email,
+        'register_type': user.registerType,
+        'img_avatar': user.imageAvatar,
+      }));
+    } catch (e) {
+      return Response.internalServerError(
+          body: {'message': 'Erro ao atualizar Avaaaaatar'});
+    }
   }
 
   Router get router => _$UserControllerRouter(this);

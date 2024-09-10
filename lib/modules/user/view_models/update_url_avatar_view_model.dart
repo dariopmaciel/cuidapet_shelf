@@ -12,5 +12,6 @@ class UpdateUrlAvatarViewModel extends RequestMapping {
   @override
   void map() {
     urlAvatar = data['url_avatar'];
+    // urlAvatar = data['url_avatar'] as String;
   }
 }
