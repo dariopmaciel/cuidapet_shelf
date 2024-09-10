@@ -237,6 +237,9 @@ class IUserRepositoryImpl implements IUserRepository {
           supplierId: dataMySql['fornecedor_id'],
         );
       }
+    } on MySqlException catch (e, s) {
+      log.error("Erro ao buscar Usuario por ID", e, s);
+      throw DatabaseException(message: "Erro ao buscar Usuario por ID");
     } finally {
       await conn?.close();
     }
