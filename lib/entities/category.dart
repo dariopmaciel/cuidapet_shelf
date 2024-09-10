@@ -2,12 +2,12 @@
 
 class Category {
   final int? id;
-  final String? nome;
+  final String? name;
   final String? type;
 
   Category({
     this.id,
-    this.nome,
+    this.name,
     this.type,
   });
 }

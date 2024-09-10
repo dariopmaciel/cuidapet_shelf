@@ -32,10 +32,10 @@ class ICategoriesRepositoryImpl implements ICategoriesRepository {
       conn = await connection.openConnection();
       final result = await conn.query('select * from categorias_fornecedor');
       if (result.isNotEmpty) {
-        result
+        return result
             .map((e) => Category(
                 id: e['id'],
-                nome: e['nome_categoria'],
+                name: e['nome_categoria'],
                 type: e['tipo_categoria']))
             .toList();
       }
