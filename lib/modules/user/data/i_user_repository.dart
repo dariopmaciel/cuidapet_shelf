@@ -1,6 +1,7 @@
-import 'dart:io';
+
 
 import 'package:cuidapet_shelf/entities/user.dart';
+import 'package:cuidapet_shelf/modules/user/view_models/platform.dart';
 
 //acesso ao banco de dados
 abstract interface class IUserRepository {

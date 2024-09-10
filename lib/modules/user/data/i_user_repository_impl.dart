@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
 
 import 'package:cuidapet_shelf/application/database/i_database_connection.dart';
 import 'package:cuidapet_shelf/application/exceptions/database_exception.dart';
@@ -8,6 +7,7 @@ import 'package:cuidapet_shelf/application/exceptions/user_not_found_exception.d
 import 'package:cuidapet_shelf/application/helpers/cripty_helper.dart';
 import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:cuidapet_shelf/entities/user.dart';
+import 'package:cuidapet_shelf/modules/user/view_models/platform.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:mysql1/mysql1.dart';
@@ -278,7 +278,7 @@ class IUserRepositoryImpl implements IUserRepository {
     try {
       conn = await connection.openConnection();
       var set = '';
-      if (platform == Platform.isIOS) {
+      if (platform == Platform.ios) {
         set = 'ios_token = ?';
       } else {
         set = 'android_token = ?';
