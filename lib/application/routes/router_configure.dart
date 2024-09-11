@@ -1,4 +1,5 @@
 import 'package:cuidapet_shelf/modules/category/categories_routers.dart';
+import 'package:cuidapet_shelf/modules/supplier/supplier_router.dart';
 import 'package:cuidapet_shelf/modules/user/user_router.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:cuidapet_shelf/application/routes/i_router.dart';
@@ -8,6 +9,7 @@ class RouterConfigure {
   final List<IRouter> _routers = [
     UserRouter(),
     CategoriesRouters(),
+    SupplierRouter(),
   ];
 
   RouterConfigure(this._router);
