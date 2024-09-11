@@ -1,7 +1,3 @@
-
-
-
-
 import 'dart:convert';
 
 import 'package:cuidapet_shelf/application/logger/i_logger.dart';
@@ -67,7 +63,7 @@ class SupplierController {
     return Response.ok(_supplierMapper(supplier));
   }
 
-   _supplierMapper(Supplier supplier) {
+  _supplierMapper(Supplier supplier) {
     return jsonEncode({
       'id': supplier.id,
       'name': supplier.name,
