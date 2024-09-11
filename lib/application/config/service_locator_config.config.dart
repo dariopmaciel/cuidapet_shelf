@@ -44,14 +44,17 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i448.ISupplierService>(
         () => _i293.ISupplierServiceImpl());
-    gh.lazySingleton<_i417.ISupplierRepository>(
-        () => _i566.ISupplierRepositoryImpl());
     gh.factory<_i77.IDatabaseConnection>(() => _i795.IDatabaseConnectionImpl(
         gh<_i32.DatabaseConnectionConfiguration>()));
     gh.lazySingleton<_i872.IUserRepository>(() => _i1014.IUserRepositoryImpl(
           connection: gh<_i77.IDatabaseConnection>(),
           log: gh<_i742.ILogger>(),
         ));
+    gh.lazySingleton<_i417.ISupplierRepository>(
+        () => _i566.ISupplierRepositoryImpl(
+              connection: gh<_i77.IDatabaseConnection>(),
+              log: gh<_i742.ILogger>(),
+            ));
     gh.lazySingleton<_i57.ICategoriesRepository>(
         () => _i724.ICategoriesRepositoryImpl(
               connection: gh<_i77.IDatabaseConnection>(),
