@@ -40,13 +40,13 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
       final result = await conn.query(query);
       return result
           .map(
-            (fornecedor) => SupplierNearByMeDto(
-              id: fornecedor['id'],
-              logo: fornecedor['logo'],
-              // name: fornecedor['nome'],
-              name: (fornecedor['name'] as Blob?).toString(),
-              distance: fornecedor['distance'],
-              categoryId: fornecedor['categorias_fornecedor_id'],
+            (f) => SupplierNearByMeDto(
+              id: f['id'],
+              // name: f['nome'],
+              name: f['nome'],
+              logo: (f['logo'] as Blob?)?.toString(),
+              distance: f['distancia'],
+              categoryId: f['categorias_fornecedor_id'],
             ),
           )
           .toList();

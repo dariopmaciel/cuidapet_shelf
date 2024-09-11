@@ -16,6 +16,7 @@ import '../../modules/category/data/i_categories_repository.dart' as _i57;
 import '../../modules/category/data/i_categories_repository_impl.dart' as _i724;
 import '../../modules/category/service/i_categories_service.dart' as _i967;
 import '../../modules/category/service/i_categories_service_impl.dart' as _i191;
+import '../../modules/supplier/controller/supplier_controller.dart' as _i331;
 import '../../modules/supplier/data/i_supplier_repository.dart' as _i417;
 import '../../modules/supplier/data/i_supplier_repository_impl.dart' as _i566;
 import '../../modules/supplier/service/i_supplier_service.dart' as _i448;
@@ -75,6 +76,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i967.ICategoriesService>(() =>
         _i191.ICategoriesServiceImpl(
             repository: gh<_i57.ICategoriesRepository>()));
+    gh.factory<_i331.SupplierController>(() => _i331.SupplierController(
+          service: gh<_i448.ISupplierService>(),
+          log: gh<_i742.ILogger>(),
+        ));
     gh.factory<_i400.CategoriesController>(() =>
         _i400.CategoriesController(service: gh<_i967.ICategoriesService>()));
     return this;

@@ -10,6 +10,7 @@ class RouterConfigure {
     UserRouter(),
     CategoriesRouters(),
     SupplierRouter(),
+    
   ];
 
   RouterConfigure(this._router);
