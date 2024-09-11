@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cuidapet_shelf/entities/supplier.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -10,6 +11,7 @@ import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:cuidapet_shelf/modules/supplier/service/i_supplier_service.dart';
 
 part 'supplier_controller.g.dart';
+
 @Injectable()
 class SupplierController {
   ISupplierService service;
@@ -50,6 +52,36 @@ class SupplierController {
           body: jsonEncode(
               {'message': "Erro ao buscar fornecedores perto de mim"}));
     }
+  }
+
+  //expressão regular para receber APENAS numeros de 0 a 9
+  // @Route.get('/')
+  // @Route.get('/<id[0-9]+>')
+  @Route.get('/<id>')
+  Future<Response> findById(Request request, String id) async {
+    final supplier = await service.findById(int.parse(id));
+    if (supplier == null) {
+      return Response.ok(jsonEncode({}));
+    }
+
+    return Response.ok(jsonEncode(_supplierMapper(supplier)));
+  }
+
+  String _supplierMapper(Supplier supplier) {
+    return jsonEncode({
+      'id': supplier.id,
+      'name': supplier.name,
+      'logo': supplier.logo,
+      'address': supplier.address,
+      'phone': supplier.phone,
+      'latitude': supplier.lat,
+      'longitude': supplier.lng,
+      'category': {
+        'id': supplier.category?.id,
+        'name': supplier.category?.name,
+        'type': supplier.category?.type,
+      }
+    });
   }
 
   Router get router => _$SupplierControllerRouter(this);
