@@ -86,9 +86,9 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
         final dataMysql = result.first;
         return Supplier(
           id: dataMysql['id'],
-          name: dataMysql['name'],
+          name: dataMysql['nome'],
           logo: (dataMysql['logo'] as Blob?)?.toString(),
-          address: dataMysql['address'],
+          address: dataMysql['endereco'],
           phone: dataMysql['telefone'],
           lat: dataMysql['lat'],
           lng: dataMysql['lng'],
