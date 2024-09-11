@@ -55,9 +55,7 @@ class SupplierController {
   }
 
   //expressão regular para receber APENAS numeros de 0 a 9
-  // @Route.get('/')
-  // @Route.get('/<id[0-9]+>')
-  @Route.get('/<id>')
+  @Route.get('/<id|[0-9]+>')
   Future<Response> findById(Request request, String id) async {
     final supplier = await service.findById(int.parse(id));
     if (supplier == null) {
