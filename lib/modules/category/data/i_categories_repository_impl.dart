@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:cuidapet_shelf/application/database/i_database_connection.dart';
 import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:cuidapet_shelf/entities/category.dart';
-import 'package:cuidapet_shelf/modules/category/service/i_categories_service_impl.dart';
+// import 'package:cuidapet_shelf/modules/category/service/i_categories_service_impl.dart';
 import 'package:mysql1/mysql1.dart';
 
 import 'i_categories_repository.dart';
