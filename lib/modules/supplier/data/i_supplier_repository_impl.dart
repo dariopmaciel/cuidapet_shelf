@@ -73,15 +73,15 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
           f.telefone,
           ST_X(f.latlng) as lat,
           ST_Y(f.latlng) as lng,
-          f.categoria_fornecedor_id,
+          f.categorias_fornecedor_id,
           c.nome_categoria,
           c.tipo_categoria
         FROM fornecedor as f
-          inner join categoria_fornecedor as c on (f.categoria_fornecedor_id = c.id)
+          inner join categorias_fornecedor as c on (f.categorias_fornecedor_id = c.id)
         WHERE
           f.id = ?
       ''';
-      final result = await conn.query(query);
+      final result = await conn.query(query,[id]);
       if (result.isNotEmpty) {
         final dataMysql = result.first;
         return Supplier(
@@ -93,7 +93,7 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
           lat: dataMysql['lat'],
           lng: dataMysql['lng'],
           category: Category(
-            id: dataMysql['categoria_fornecedor_id'],
+            id: dataMysql['categorias_fornecedor_id'],
             name: dataMysql['nome_categoria'],
             type: dataMysql['tipo_categoria'],
           ),
