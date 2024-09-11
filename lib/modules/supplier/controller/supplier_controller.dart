@@ -1,14 +1,15 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:async';
+
+
+
+
 import 'dart:convert';
 
+import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:cuidapet_shelf/entities/supplier.dart';
+import 'package:cuidapet_shelf/modules/supplier/service/i_supplier_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
-
-import 'package:cuidapet_shelf/application/logger/i_logger.dart';
-import 'package:cuidapet_shelf/modules/supplier/service/i_supplier_service.dart';
 
 part 'supplier_controller.g.dart';
 
@@ -63,10 +64,10 @@ class SupplierController {
       return Response.ok(jsonEncode({}));
     }
 
-    return Response.ok(jsonEncode(_supplierMapper(supplier)));
+    return Response.ok(_supplierMapper(supplier));
   }
 
-  String _supplierMapper(Supplier supplier) {
+   _supplierMapper(Supplier supplier) {
     return jsonEncode({
       'id': supplier.id,
       'name': supplier.name,

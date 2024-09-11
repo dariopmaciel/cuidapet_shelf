@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:cuidapet_shelf/application/exceptions/database_exception.dart';
 import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:cuidapet_shelf/entities/category.dart';
@@ -81,7 +82,7 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
         WHERE
           f.id = ?
       ''';
-      final result = await conn.query(query,[id]);
+      final result = await conn.query(query, [id]);
       if (result.isNotEmpty) {
         final dataMysql = result.first;
         return Supplier(
@@ -101,7 +102,8 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
       }
     } on MySqlException catch (e, s) {
       log.error("ERRO ao buscar Fornecedor", e, s);
-      throw DatabaseException(message: "ERRO ao buscar Fornecedor");
+      // throw DatabaseException(message: "ERRO ao buscar Fornecedor");
+      throw DatabaseException();
     } finally {
       await conn?.close();
     }
