@@ -22,7 +22,7 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
     MySqlConnection? conn;
     try {
       conn = await connection.openConnection();
-      
+
       //!QUERY DO INFERRRRRRRRNO
       final query = '''
         SELECT f.id, f.nome, f.logo, f.categorias_fornecedor_id,
@@ -37,7 +37,19 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
               FROM fornecedor f 
           HAVING distancia <= $distance;
         ''';
-        
+      final result = await conn.query(query);
+      return result
+          .map(
+            (fornecedor) => SupplierNearByMeDto(
+              id: fornecedor['id'],
+              logo: fornecedor['logo'],
+              // name: fornecedor['nome'],
+              name: (fornecedor['name'] as Blob?).toString(),
+              distance: fornecedor['distance'],
+              categoryId: fornecedor['categorias_fornecedor_id'],
+            ),
+          )
+          .toList();
     } on MySqlException catch (e, s) {
       log.error("Erro ao buscar Fornecedores perto de mim", e, s);
       throw DatabaseException();
