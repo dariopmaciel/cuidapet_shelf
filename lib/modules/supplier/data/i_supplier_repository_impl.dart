@@ -22,20 +22,22 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
     MySqlConnection? conn;
     try {
       conn = await connection.openConnection();
-      //
+      
+      //!QUERY DO INFERRRRRRRRNO
       final query = '''
         SELECT f.id, f.nome, f.logo, f.categorias_fornecedor_id,
           (6371 * 
             acos(
-              cos(radians($lat)) * 
-              cos(radians(ST_X(f.latlng))) * 
-              cos(radians($lng) - radians(ST_Y(f.latlng))) + 
-              sin(radians($lat)) * 
-              sin(radians(ST_X(f.latlng)))
-            )) AS distancia 
-           FROM fornecedor f 
+                  cos(radians($lat)) * 
+                  cos(radians(ST_X(f.latlng))) * 
+                  cos(radians($lng) - radians(ST_Y(f.latlng))) + 
+                  sin(radians($lat)) * 
+                  sin(radians(ST_X(f.latlng)))
+              )) AS distancia 
+              FROM fornecedor f 
           HAVING distancia <= $distance;
         ''';
+        
     } on MySqlException catch (e, s) {
       log.error("Erro ao buscar Fornecedores perto de mim", e, s);
       throw DatabaseException();
