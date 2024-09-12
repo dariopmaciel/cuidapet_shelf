@@ -63,7 +63,14 @@ class SupplierController {
     return Response.ok(_supplierMapper(supplier));
   }
 
-  _supplierMapper(Supplier supplier) {
+  @Route.get('/<supplierId|[0-9]+>/services/')
+  Future<Response> findServicesBySupplierId (Request request, String supplierId) async{
+
+     return Response.ok(jsonEncode(''));
+  }
+
+//*---------------------------------------------------------------
+  String _supplierMapper(Supplier supplier) {
     return jsonEncode({
       'id': supplier.id,
       'name': supplier.name,
