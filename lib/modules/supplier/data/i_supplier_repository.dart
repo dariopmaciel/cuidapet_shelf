@@ -6,4 +6,5 @@ abstract interface class ISupplierRepository {
   Future<List<SupplierNearByMeDto>> findNearbyPosition(double lat, double lng, int distance);
   Future<Supplier?> findById(int id);
   Future<List<SupplierServiceS>> findServicesBySupplierId(int supplierId);
+  Future<bool> checkUserEmailExists(String email);
 }

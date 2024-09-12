@@ -25,5 +25,8 @@ class ISupplierServiceImpl implements ISupplierService {
   @override
   Future<List<SupplierServiceS>> findServicesBySupplierId(int supplierId) =>
       repository.findServicesBySupplierId(supplierId);
+
+  @override
+  Future<bool> checkUserEmailExists(String email) =>repository.checkUserEmailExists(email);
   //
 }
