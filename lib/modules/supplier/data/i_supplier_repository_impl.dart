@@ -108,6 +108,7 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
     } finally {
       await conn?.close();
     }
+    return null;
   }
 
   @override
