@@ -101,7 +101,7 @@ class SupplierController {
     try {
       final model = CreateSupplierUserViewModel(await request.readAsString());
       await service.createUserSupplier(model);
-      return Response.ok(jsonEncode(''));
+      return Response.ok(jsonEncode({}));
     } catch (e, s) {
       log.error("Erro ao cadastrar um novo fornecedor e usuario", e, s);
       return Response.internalServerError(

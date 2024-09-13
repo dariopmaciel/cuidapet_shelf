@@ -187,9 +187,9 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
             endereco, 
             telefone, 
             latlng, 
-            categoria_fornecedor_id
+            categorias_fornecedor_id
           )
-          VALUES (?,?,?,?,?,?)
+          VALUES (?,?,?,?,ST_GeomfromText(?),?)
       ''', [
         //antes da [ usar '<Object?>'
         supplier.name,

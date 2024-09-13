@@ -14,6 +14,6 @@ class CreateSupplierUserViewModel extends RequestMapping {
     supplierName = data['supplier_name'];
     email = data['email'];
     password = data['password'];
-    category = data['category'];
+    category = data['category_id'];
   }
 }
