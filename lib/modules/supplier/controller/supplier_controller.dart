@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:cuidapet_shelf/entities/supplier.dart';
 import 'package:cuidapet_shelf/modules/supplier/service/i_supplier_service.dart';
+import 'package:cuidapet_shelf/modules/supplier/view_models/create_supplier_user_view_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -96,8 +97,17 @@ class SupplierController {
   }
 
   @Route.post('/user')
-  Future<Response>createUser(Request request) async {
-    return Response.ok(jsonEncode(''));
+  Future<Response> createUser(Request request) async {
+    try {
+      final model = CreateSupplierUserViewModel(await request.readAsString());
+      await service.createUserSupplier(model);
+      return Response.ok(jsonEncode(''));
+    } catch (e, s) {
+      log.error("Erro ao cadastrar um novo fornecedor e usuario", e, s);
+      return Response.internalServerError(
+          body: jsonEncode(
+              {'message': 'Erro ao cadastrar um novo fornecedor e usuario'}));
+    }
   }
 
 //*---------------------------------------------------------------

@@ -16,7 +16,7 @@ class SecurityMiddleware extends Middlewares {
     SecuritySkipUrl(url: '/auth/register', method: 'POST'),
     SecuritySkipUrl(url: '/auth/', method: 'POST'),
     SecuritySkipUrl(url: '/suppliers/user', method: 'GET'),
-
+    SecuritySkipUrl(url: '/suppliers/user', method: 'POST'),
   ];
 
   SecurityMiddleware(this.log);
@@ -30,7 +30,7 @@ class SecurityMiddleware extends Middlewares {
       }
 //segundo passo
       final authHeader = request.headers['Authorization'];
-      
+
       if (authHeader == null || authHeader.isEmpty) {
         throw JwtException.invalidToken;
       }
