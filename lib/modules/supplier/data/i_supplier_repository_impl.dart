@@ -166,9 +166,42 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
       final dataMysql =
           result.first; //pega o primeiro item, se maior q zero  True : False
       return dataMysql[0] > 0;
-      
     } on MySqlException catch (e, s) {
       log.error("Erro ao verificar EXISTE;", e, s);
+      throw DatabaseException();
+    } finally {
+      conn?.close();
+    }
+  }
+
+  @override
+  Future<int> saveSupplier(Supplier supplier) async {
+    MySqlConnection? conn;
+    try {
+      conn = await connection.openConnection();
+      final result = await conn.query('''
+        INSERT INTO
+          fornecedor(
+            nome, 
+            logo, 
+            endereco, 
+            telefone, 
+            latlng, 
+            categoria_fornecedor_id
+          )
+          VALUES (?,?,?,?,?,?)
+      ''', [
+        //antes da [ usar '<Object?>'
+        supplier.name,
+        supplier.logo,
+        supplier.address,
+        supplier.phone,
+        'POINT(${supplier.lat ?? 0} ${supplier.lng ?? 0})',
+        supplier.category?.id,
+      ]);
+      return result.insertId ?? 0;
+    } on MySqlException catch (e, s) {
+      log.error("Erro ao cadastrar um novo fornecedor", e, s);
       throw DatabaseException();
     } finally {
       conn?.close();
