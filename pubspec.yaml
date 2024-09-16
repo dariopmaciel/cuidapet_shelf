@@ -10,7 +10,8 @@ dependencies:
   args: ^2.5.0
   crypto: ^3.0.5
   dotenv: ^3.0.0
-  # dotenv: ^4.2.0
+  # não funciona, conflito com o ENV
+  # dotenv: ^4.2.0 
   get_it: ^7.7.0
   injectable: ^2.4.4
   injectable_generator: ^2.6.2
