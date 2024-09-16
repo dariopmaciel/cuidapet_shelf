@@ -3,6 +3,7 @@ import 'package:cuidapet_shelf/modules/schedules/controller/schedule_controller.
 import 'package:get_it/get_it.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+
 class ScheduleRouter implements IRouter {
   @override
   void configure(Router router) {
