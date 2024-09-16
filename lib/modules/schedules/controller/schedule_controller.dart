@@ -32,7 +32,7 @@ class ScheduleController {
         dataRequest: await request.readAsString(),
       );
       await service.scheduleService(inputModel);
-      return Response.ok(jsonEncode({}));
+      return Response.ok(jsonEncode('AGENDAMENTO REALIZADO'));
     } catch (e, s) {
       log.error("ERRO AO SALVAR AGENDAMENTO", e, s);
       return Response.internalServerError();
