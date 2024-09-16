@@ -9,7 +9,7 @@ class Schedule {
   final String petName;
   final int userId;
   final Supplier supplier;
-  final List<ScheduleSupplierService> service;
+  final List<ScheduleSupplierService> services;
   
   Schedule({
     required this.id,
@@ -19,6 +19,6 @@ class Schedule {
     required this.petName,
     required this.userId,
     required this.supplier,
-    required this.service,
+    required this.services,
   });
 }

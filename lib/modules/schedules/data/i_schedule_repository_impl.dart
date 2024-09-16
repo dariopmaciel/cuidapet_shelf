@@ -41,6 +41,20 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
           schedule.name,
           schedule.petName,
         ]);
+        final scheduleId = result.insertId;
+
+        //POR NÃO SER UMA QUERY PADRÃO IRÁ MUDAR
+        if (scheduleId != null) {
+          // final resultServide = conn.query(
+          // final resultServide = conn.queryMulti(
+          await conn.queryMulti('''
+            INSERT INTO
+              agendamento_service 
+            VALUES(?,?)
+            ''',
+              // [scheduleId, schedule.services]);
+              schedule.services.map((s) => [scheduleId, s.service.id]));
+        }
       });
     } on MySqlException catch (e, s) {
       log.error("ERRO AO EFETUAR SAVE", e, s);
