@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:cuidapet_shelf/application/helpers/request_mapping.dart';
-import 'package:cuidapet_shelf/entities/category.dart';
 
 class SupplierUpdateInputModel extends RequestMapping {
   int supplierId;
@@ -11,19 +10,7 @@ class SupplierUpdateInputModel extends RequestMapping {
   late String phone;
   late double lat;
   late double lng;
-  late Category categoryId;
-
-  // SupplierUpdateInputModel(
-  //   super.dataRequest, {
-  //   required this.supplierId,
-  //   required this.name,
-  //   required this.logo,
-  //   required this.address,
-  //   required this.phone,
-  //   required this.lat,
-  //   required this.lng,
-  //   required this.categoryId,
-  // });
+  late int categoryId;
 
   SupplierUpdateInputModel(
       {required this.supplierId, required String dataRequest})

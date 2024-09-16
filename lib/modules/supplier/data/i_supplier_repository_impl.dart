@@ -207,4 +207,57 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
       conn?.close();
     }
   }
+
+  @override
+  Future<Supplier> update(Supplier supplier) async {
+    MySqlConnection? conn;
+    try {
+      conn = await connection.openConnection();
+      //FEITA ALTERAÇÃO DO FORNECEDOR
+      //ALTERADO TODOS CAMPOS
+      await conn.query('''
+        UPDATE fornecedor
+          set
+            nome = ?,
+            logo = ?,
+            endereco = ?,
+            telefone = ?,
+            latlng = ?ST_GeomFromText(?),
+            categorias_fornecedor_id = ?
+        WHERE
+          id = ?
+      ''', [
+        supplier.name,
+        supplier.logo,
+        supplier.address,
+        supplier.phone,
+        'POINT(${supplier.lat} ${supplier.lng})',
+        supplier.category?.id,
+        supplier.id,
+      ]);
+      //FEITO UM SELECT NA CATEGORIA PQ O SUPPLIER SO VEM COM O ID PARA PEGAR TODOS OS DADOS DELE
+      Category? category;
+      if (supplier.category?.id != null) {
+        final resultCategory = await conn.query('''
+        SELECT * 
+          FROM categorias_fornecedor 
+          WHERE id = ?
+      ''', [supplier.category?.id]);
+        //BUSCA DA CATEGORIA E POPULE OBJ
+        var categoryData = resultCategory.first;
+        category = Category(
+          id: categoryData['id'],
+          name: categoryData['nome_categoria'],
+          type: categoryData['tipo_categoria'],
+        );
+      }
+      //criado um copywith para poder adicionar novas informações E CASO NÃO TENHA ALTERAÇÃO PEGA AS MESMAS INFORMAÇÕES não alteradas E O RETORNA
+      return supplier.copyWith(category: category);
+    } on MySqlException catch (e, s) {
+      log.error("ERRO AO ATUALIZAR DADOS DO FORNECEDOR", e, s);
+      throw DatabaseException();
+    } finally {
+      conn?.close();
+    }
+  }
 }
