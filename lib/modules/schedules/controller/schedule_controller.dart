@@ -9,8 +9,8 @@ part 'schedule_controller.g.dart';
 @Injectable()
 class ScheduleController {
 
-   @Route.get('/')
-   Future<Response> find(Request request) async { 
+   @Route.post('/')
+   Future<Response> scheduleServices(Request request) async { 
       return Response.ok(jsonEncode(''));
    }
 
