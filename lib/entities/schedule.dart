@@ -2,7 +2,7 @@ import 'package:cuidapet_shelf/entities/schedule_supplier_service.dart';
 import 'package:cuidapet_shelf/entities/supplier.dart';
 
 class Schedule {
-  final int id;
+  final int? id;
   final DateTime scheduleDate;
   final String status;
   final String name;
@@ -10,9 +10,9 @@ class Schedule {
   final int userId;
   final Supplier supplier;
   final List<ScheduleSupplierService> services;
-  
+
   Schedule({
-    required this.id,
+    this.id,
     required this.scheduleDate,
     required this.status,
     required this.name,
