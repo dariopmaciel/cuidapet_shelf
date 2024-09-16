@@ -26,7 +26,7 @@ class ScheduleController {
       userId: userId,
       dataRequest: await request.readAsString(),
     );
-    service.scheduleService(inputModel);
+    await service.scheduleService(inputModel);
     return Response.ok(jsonEncode(''));
   }
 
