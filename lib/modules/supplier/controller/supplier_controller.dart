@@ -109,6 +109,10 @@ class SupplierController {
               {'message': 'Erro ao cadastrar um novo fornecedor e usuario'}));
     }
   }
+  @Route.put('/')
+  Future<Response> update (Request request) async{
+     return Response.ok(jsonEncode(''));
+  }
 
 //*---------------------------------------------------------------
   String _supplierMapper(Supplier supplier) {
