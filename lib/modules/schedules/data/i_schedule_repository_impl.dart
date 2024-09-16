@@ -27,17 +27,19 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
           INSERT INTO
             agendamento (
               data_agendamento, 
-              usuario_id, 
+              usuario_id,
               fornecedor_id, 
               status, 
               nome, 
               nome_pet)
             VALUES(?,?,?,?,?,?)
         ''', [
-        schedule.scheduleDate.toIso8601String(),
-        schedule.userId,
-        schedule.f
-
+          schedule.scheduleDate.toIso8601String(),
+          schedule.userId,
+          schedule.supplier.id,
+          schedule.status,
+          schedule.name,
+          schedule.petName,
         ]);
       });
     } on MySqlException catch (e, s) {
