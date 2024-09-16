@@ -96,8 +96,10 @@ extension GetItInjectableX on _i174.GetIt {
         _i400.CategoriesController(service: gh<_i967.ICategoriesService>()));
     gh.lazySingleton<_i701.IScheduleService>(() => _i939.IScheduleServiceImpl(
         repository: gh<_i411.IScheduleRepository>()));
-    gh.factory<_i436.ScheduleController>(
-        () => _i436.ScheduleController(service: gh<_i701.IScheduleService>()));
+    gh.factory<_i436.ScheduleController>(() => _i436.ScheduleController(
+          service: gh<_i701.IScheduleService>(),
+          log: gh<_i742.ILogger>(),
+        ));
     return this;
   }
 }
