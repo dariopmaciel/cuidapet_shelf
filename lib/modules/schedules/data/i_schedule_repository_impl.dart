@@ -49,7 +49,7 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
           // final resultServide = conn.queryMulti(
           await conn.queryMulti('''
             INSERT INTO
-              agendamento_service 
+              agendamento_servicos
             VALUES(?,?)
             ''',
               // [scheduleId, schedule.services]);
