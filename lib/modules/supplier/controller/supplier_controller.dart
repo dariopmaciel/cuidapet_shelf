@@ -113,19 +113,25 @@ class SupplierController {
 
   @Route.put('/')
   Future<Response> update(Request request) async {
-    final supplier = int.parse(request.headers['supplier'] ?? "");
+    try {
+      final supplier = int.parse(request.headers['supplier'] ?? "");
 
-    if (supplier == null) {
-      return Response(400,
-          body: jsonEncode({'message': 'CODIGO FORNECEDOR NAO PODE SER NULO'}));
+      if (supplier == null) {
+        return Response(400,
+            body:
+                jsonEncode({'message': 'CODIGO FORNECEDOR NAO PODE SER NULO'}));
+      }
+
+      final model = SupplierUpdateInputModel(
+          supplierId: supplier, dataRequest: await request.readAsString());
+
+      final supplierResponse = await service.update(model);
+
+      return Response.ok(_supplierMapper(supplierResponse));
+    } catch (e, s) {
+      log.error("ERRO AO ATUALIZAR FORNECEDOR", e, s);
+      return Response.internalServerError();
     }
-
-    final model = SupplierUpdateInputModel(
-        supplierId: supplier, dataRequest: await request.readAsString());
-
-    final supplierResponse = await service.update(model);
-
-    return Response.ok(_supplierMapper(supplierResponse));
   }
 
 //*---------------------------------------------------------------
