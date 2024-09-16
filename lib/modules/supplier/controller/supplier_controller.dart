@@ -114,16 +114,19 @@ class SupplierController {
   @Route.put('/')
   Future<Response> update(Request request) async {
     try {
-      final supplier = int.parse(request.headers['supplier'] ?? "");
+      final supplier = int.tryParse(request.headers['supplier'] ?? "");
 
       if (supplier == null) {
         return Response(400,
-            body:
-                jsonEncode({'message': 'CODIGO FORNECEDOR NAO PODE SER NULO'}));
+            body: jsonEncode({
+              'message': 'CODIGO FORNECEDOR NAO PODE SER NULO ou INVÁLIDO'
+            }));
       }
 
       final model = SupplierUpdateInputModel(
-          supplierId: supplier, dataRequest: await request.readAsString());
+        supplierId: supplier,
+        dataRequest: await request.readAsString(),
+      );
 
       final supplierResponse = await service.update(model);
 

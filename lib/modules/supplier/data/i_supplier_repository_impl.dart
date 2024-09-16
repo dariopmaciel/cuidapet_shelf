@@ -39,7 +39,8 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
                   sin(radians(ST_X(f.latlng)))
               )) AS distancia 
               FROM fornecedor f 
-          HAVING distancia <= $distance;
+          HAVING distancia <= $distance
+          Order by distancia;
         ''';
       final result = await conn.query(query);
       return result
@@ -217,12 +218,12 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
       //ALTERADO TODOS CAMPOS
       await conn.query('''
         UPDATE fornecedor
-          set
+          SET
             nome = ?,
             logo = ?,
             endereco = ?,
             telefone = ?,
-            latlng = ?ST_GeomFromText(?),
+            latlng = ST_GeomFromText(?),
             categorias_fornecedor_id = ?
         WHERE
           id = ?
@@ -243,21 +244,31 @@ class ISupplierRepositoryImpl implements ISupplierRepository {
           FROM categorias_fornecedor 
           WHERE id = ?
       ''', [supplier.category?.id]);
+
         //BUSCA DA CATEGORIA E POPULE OBJ
-        var categoryData = resultCategory.first;
-        category = Category(
-          id: categoryData['id'],
-          name: categoryData['nome_categoria'],
-          type: categoryData['tipo_categoria'],
-        );
+        // var categoryData = resultCategory.first;
+        // category = Category(
+        //   id: categoryData['id'],
+        //   name: categoryData['nome_categoria'],
+        //   type: categoryData['tipo_categoria'],
+        // );
+        if (resultCategory.isNotEmpty) {
+          // Verifica se há resultados
+          var categoryData = resultCategory.first;
+          category = Category(
+            id: categoryData['id'],
+            name: categoryData['nome_categoria'],
+            type: categoryData['tipo_categoria'],
+          );
+        }
       }
       //criado um copywith para poder adicionar novas informações E CASO NÃO TENHA ALTERAÇÃO PEGA AS MESMAS INFORMAÇÕES não alteradas E O RETORNA
       return supplier.copyWith(category: category);
     } on MySqlException catch (e, s) {
-      log.error("ERRO AO ATUALIZAR DADOS DO FORNECEDOR", e, s);
+      log.error("Erro ao atualizar dados do Fornecedor", e, s);
       throw DatabaseException();
     } finally {
-      conn?.close();
+      await conn?.close();
     }
   }
 }

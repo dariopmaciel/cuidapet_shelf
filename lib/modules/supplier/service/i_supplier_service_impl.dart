@@ -69,7 +69,8 @@ class ISupplierServiceImpl implements ISupplierService {
           phone: model.phone,
           category: Category(id: model.categoryId)),
     );
-    // return await supplier;
-    return await repository.update(supplier as Supplier);
+    return await supplier;
+    //não funciona o de baixo
+    // return await repository.update(supplier as Supplier);
   }
 }
