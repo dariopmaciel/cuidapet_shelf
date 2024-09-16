@@ -48,7 +48,6 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i436.ScheduleController>(() => _i436.ScheduleController());
     gh.factory<_i77.IDatabaseConnection>(() => _i795.IDatabaseConnectionImpl(
         gh<_i32.DatabaseConnectionConfiguration>()));
     gh.lazySingleton<_i872.IUserRepository>(() => _i1014.IUserRepositoryImpl(
@@ -97,6 +96,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i400.CategoriesController(service: gh<_i967.ICategoriesService>()));
     gh.lazySingleton<_i701.IScheduleService>(() => _i939.IScheduleServiceImpl(
         repository: gh<_i411.IScheduleRepository>()));
+    gh.factory<_i436.ScheduleController>(
+        () => _i436.ScheduleController(service: gh<_i701.IScheduleService>()));
     return this;
   }
 }
