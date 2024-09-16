@@ -51,8 +51,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i436.ScheduleController>(() => _i436.ScheduleController());
     gh.lazySingleton<_i701.IScheduleService>(
         () => _i939.IScheduleServiceImpl());
-    gh.lazySingleton<_i411.IScheduleRepository>(
-        () => _i171.IScheduleRepositoryImpl());
     gh.factory<_i77.IDatabaseConnection>(() => _i795.IDatabaseConnectionImpl(
         gh<_i32.DatabaseConnectionConfiguration>()));
     gh.lazySingleton<_i872.IUserRepository>(() => _i1014.IUserRepositoryImpl(
@@ -88,6 +86,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i967.ICategoriesService>(() =>
         _i191.ICategoriesServiceImpl(
             repository: gh<_i57.ICategoriesRepository>()));
+    gh.lazySingleton<_i411.IScheduleRepository>(
+        () => _i171.IScheduleRepositoryImpl(
+              connection: gh<_i77.IDatabaseConnection>(),
+              log: gh<_i742.ILogger>(),
+            ));
     gh.factory<_i331.SupplierController>(() => _i331.SupplierController(
           service: gh<_i448.ISupplierService>(),
           log: gh<_i742.ILogger>(),
