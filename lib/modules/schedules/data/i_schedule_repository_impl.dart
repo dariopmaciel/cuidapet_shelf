@@ -169,4 +169,53 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
       await conn?.close();
     }
   }
+
+  @override
+  Future<List<Schedule>> findAllScheduleByUserSupplier(int userId) async {
+    MySqlConnection? conn;
+    try {
+      conn = await connection.openConnection();
+      final query = '''
+        SELECT 
+          a.id ,
+          a.data_agendamento,
+          a.status,
+          a.nome,
+          a.nome_pet,
+          f.id as fornec_id,
+          f.nome as fornec_nome,
+          f.logo 
+        FROM agendamento a
+        INNER JOIN fornecedor f ON f.id = a.fornecedor_id
+        WHERE a.usuario_id = ?
+        order by a.data_agendamento desc
+      ''';
+      final result = await conn.query(query, [userId]);
+      final scheduleResultFuture = result
+          .map((s) async => Schedule(
+              id: s['id'],
+              scheduleDate: s['data_agendamento'],
+              status: s['status'],
+              name: s['nome'],
+              petName: s['nome_pet'],
+              userId: userId,
+              supplier: Supplier(
+                id: s['fornec_id'],
+                logo: (s['logo'] as Blob?).toString(),
+                name: s['fornec_nome'],
+              ),
+              services: await findAllServicesBySchedule(s['id'])))
+          .toList();
+      //RESPONSAVEL POR ESPERAR TODOS OS RESULTADOS E RTETORNAR EM UMA LISTA SIMPLES
+      final scheduleResult = Future.wait(scheduleResultFuture);
+      return scheduleResult;
+      //ou assim para clean code
+      // return Future.wait(scheduleResultFuture);
+    } on DatabaseException catch (e, s) {
+      log.error('Erro ao alterar status de um agendamento', e, s);
+      throw DatabaseException();
+    } finally {
+      await conn?.close();
+    }
+  }
 }

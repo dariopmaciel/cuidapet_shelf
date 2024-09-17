@@ -52,7 +52,45 @@ class ScheduleController {
     }
   }
 
-  @Route.get('/')
+  @Route.get('/supplier')
+  Future<Response> findAllSchedulesBySupplier(Request request) async {
+    final userId = int.parse(request.headers['user']!);
+    try {
+      final result = await service.findAllSchedulesByUser(userId);
+      final response = result
+          .map(
+            (s) => {
+              'id': s.id,
+              'schedule_date': s.scheduleDate.toIso8601String(),
+              'status': s.status,
+              'name': s.name,
+              'petName': s.petName,
+              'supplier': {
+                'id': s.supplier.id,
+                'name': s.supplier.name,
+                'logo': s.supplier.logo,
+              },
+              'services': s.services
+                  .map(
+                    (e) => {
+                      'id': e.service.id,
+                      'name': e.service.name,
+                      'price': e.service.price,
+                    },
+                  )
+                  .toList(),
+            },
+          )
+          .toList();
+
+      return Response.ok(jsonEncode(response));
+    } catch (e, s) {
+      log.error("Erro ao buscar AGENDAMENTOS DO USUARIO -> [$userId]", e, s);
+      return Response.internalServerError();
+    }
+  }
+
+   @Route.get('/')
   Future<Response> findAllSchedulesByUser(Request request) async {
     final userId = int.parse(request.headers['user']!);
     try {
