@@ -93,17 +93,16 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
       conn = await connection.openConnection();
       final query = '''
         SELECT 
-          a.id AS agen_id,
+          a.id ,
           a.data_agendamento,
           a.status,
           a.nome,
           a.nome_pet,
-          f.id AS fornec_id
-          f.nome AS fornec_nome,
+          f.id as fornec_id,
+          f.nome as fornec_nome,
           f.logo 
-        FROM agendamento AS a
-        INNER JOIN fornecedor f 
-        ON f.id = a.fornecedor_id
+        FROM agendamento a
+        INNER JOIN fornecedor f ON f.id = a.fornecedor_id
         WHERE a.usuario_id = ?
       ''';
       final result = await conn.query(query, [userId]);
@@ -117,7 +116,7 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
               userId: userId,
               supplier: Supplier(
                 id: s['fornec_id'],
-                logo: s['logo'],
+                logo: (s['logo'] as Blob?).toString(),
                 name: s['fornec_nome'],
               ),
               services: await findAllServicesBySchedule(s['id'])))
@@ -146,9 +145,9 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
         fs.nome_servico, 
         fs.valor_servico, 
         fs.fornecedor_id
-      FROM agendamento_servicos AS as,
-      INNER JOIN fornecedor_servicos fs ON fs.id = as.fornecedor_servicos_id     
-      WHERE as.agendamento_id = ? 
+      FROM agendamento_servicos AS ags
+      INNER JOIN fornecedor_servicos fs ON fs.id = ags.fornecedor_servicos_id     
+      WHERE ags.agendamento_id = ? 
       ''', [scheduleId]);
 
       return result
