@@ -51,5 +51,11 @@ class ScheduleController {
     }
   }
 
+
+@Route.get('/')
+Future<Response> findAllSchedulesByUser(Request request) async{
+   return Response.ok(jsonEncode(''));
+}
+
   Router get router => _$ScheduleControllerRouter(this);
 }
