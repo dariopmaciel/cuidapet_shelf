@@ -71,12 +71,9 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
     try {
       conn = await connection.openConnection();
       await conn.query('''
-        UPDATE 
-          agendamento
-        SET 
-          status = ?
-        WHERE 
-          id = ?''', [
+        update agendamento set status = ?
+        where id = ?
+        ''', [
         status, scheduleId
         ]);
     } on DatabaseException catch (e, s) {
