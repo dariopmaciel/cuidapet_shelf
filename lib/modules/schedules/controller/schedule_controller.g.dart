@@ -15,7 +15,7 @@ Router _$ScheduleControllerRouter(ScheduleController service) {
   );
   router.add(
     'PUT',
-    r'/<schedule_id|[0-9]+>/status/<status>',
+    r'/<scheduleId|[0-9]+>/status/<status>',
     service.changeStatus,
   );
   return router;
