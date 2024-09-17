@@ -4,4 +4,5 @@ import 'package:cuidapet_shelf/modules/schedules/view_models/schedule_save_input
 
 abstract interface class IScheduleService {
 Future<void> scheduleService(ScheduleSaveInputModel model);
+Future <void> changeStatus(String status, int scheduleId );
 }

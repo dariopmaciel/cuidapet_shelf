@@ -47,7 +47,8 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
         if (scheduleId != null) {
           // final resultServide = conn.query(
           // final resultServide = conn.queryMulti(
-          await conn.queryMulti('''
+          await conn.queryMulti(
+              '''
             INSERT INTO
               agendamento_servicos
             VALUES(?,?)
@@ -58,6 +59,28 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
       });
     } on MySqlException catch (e, s) {
       log.error("ERRO AO EFETUAR SAVE", e, s);
+      throw DatabaseException();
+    } finally {
+      await conn?.close();
+    }
+  }
+
+  @override
+  Future<void> changeStatus(String status, int scheduleId) async {
+    MySqlConnection? conn;
+    try {
+      conn = await connection.openConnection();
+      await conn.query('''
+        UPDATE 
+          agendamento
+        SET 
+          status = ?
+        WHERE 
+          id = ?''', [
+        status, scheduleId
+        ]);
+    } on DatabaseException catch (e, s) {
+      log.error('Erro ao alterar status de um agendamento', e, s);
       throw DatabaseException();
     } finally {
       await conn?.close();

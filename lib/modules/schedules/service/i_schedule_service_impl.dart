@@ -13,7 +13,7 @@ import './i_schedule_service.dart';
 @LazySingleton(as: IScheduleService)
 class IScheduleServiceImpl implements IScheduleService {
   IScheduleRepository repository;
-  
+
   IScheduleServiceImpl({required this.repository});
 
   @override
@@ -31,4 +31,8 @@ class IScheduleServiceImpl implements IScheduleService {
     );
     await repository.save(schedule);
   }
+
+  @override
+  Future<void> changeStatus(String status, int scheduleId) =>
+      repository.changeStatus(status, scheduleId);
 }

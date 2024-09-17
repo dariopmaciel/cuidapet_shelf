@@ -39,5 +39,11 @@ class ScheduleController {
     }
   }
 
+  @Route.put('/<schedule_id|[0-9]+>/status/<status>')
+  Future<Response> changeStatus(Request request) async {
+    // await service.changeStatus(status, int.parse(scheduleId));
+    return Response.ok(jsonEncode('AGENDAMENTO ALTERADO'));
+  }
+
   Router get router => _$ScheduleControllerRouter(this);
 }
