@@ -49,10 +49,16 @@ class IChatRepositoryImpl implements IChatRepository {
     try {
       conn = await connection.openConnection();
       final result = await conn.query('''
-
-      
-      
-      ''',[]);
+        SELECT *
+        FROM chats AS c
+        INNER JOIN agendamento a ON a.id = c.agendamento_id
+        INNER JOIN fornecedor f ON f.id = a.fornecedor_id
+        -- Dados do usuario cliente do petshop
+        INNER JOIN usuario u ON u.id = a.usuario_id
+        -- Dados do usuario fornecedor ()o PETSHOP)
+        INNER JOIN usuario uf ON uf.fornecedor_id = f.id
+        WHERE c.id = ?
+      ''', []);
     } on MySqlConnection catch (e, s) {
       log.error('Erro ao buscar dados do CHAT', e, s);
       throw DatabaseException();
