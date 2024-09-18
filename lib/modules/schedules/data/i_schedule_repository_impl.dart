@@ -187,7 +187,8 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
           f.logo 
         FROM agendamento a
         INNER JOIN fornecedor f ON f.id = a.fornecedor_id
-        WHERE a.usuario_id = ?
+        INNER JOIN usuario u ON u.fornecedor_id = f.id
+        WHERE u.id = ?
         order by a.data_agendamento desc
       ''';
       final result = await conn.query(query, [userId]);

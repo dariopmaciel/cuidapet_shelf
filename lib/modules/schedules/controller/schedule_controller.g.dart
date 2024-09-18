@@ -20,13 +20,13 @@ Router _$ScheduleControllerRouter(ScheduleController service) {
   );
   router.add(
     'GET',
-    r'/supplier',
-    service.findAllSchedulesBySupplier,
+    r'/',
+    service.findAllSchedulesByUser,
   );
   router.add(
     'GET',
-    r'/',
-    service.findAllSchedulesByUser,
+    r'/supplier',
+    service.findAllSchedulesBySupplier,
   );
   return router;
 }
