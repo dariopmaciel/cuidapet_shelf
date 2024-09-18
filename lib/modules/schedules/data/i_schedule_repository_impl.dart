@@ -108,7 +108,8 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
       ''';
       final result = await conn.query(query, [userId]);
       final scheduleResultFuture = result
-          .map((s) async => Schedule(
+          .map(
+            (s) async => Schedule(
               id: s['id'],
               scheduleDate: s['data_agendamento'],
               status: s['status'],
@@ -120,13 +121,15 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
                 logo: (s['logo'] as Blob?).toString(),
                 name: s['fornec_nome'],
               ),
-              services: await findAllServicesBySchedule(s['id'])))
+              services: await findAllServicesBySchedule(s['id']),
+            ),
+          )
           .toList();
       //RESPONSAVEL POR ESPERAR TODOS OS RESULTADOS E RTETORNAR EM UMA LISTA SIMPLES
-      final scheduleResult = Future.wait(scheduleResultFuture);
-      return scheduleResult;
+      // final scheduleResult = Future.wait(scheduleResultFuture);
+      // return scheduleResult;
       //ou assim para clean code
-      // return Future.wait(scheduleResultFuture);
+      return Future.wait(scheduleResultFuture);
     } on DatabaseException catch (e, s) {
       log.error('Erro ao alterar status de um agendamento', e, s);
       throw DatabaseException();
@@ -154,12 +157,13 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
       return result
           .map(
             (s) => ScheduleSupplierService(
-                service: SupplierServiceS(
-              id: s['id'],
-              name: s['nome_servico'],
-              price: s['valor_servico'],
-              supplierId: s['fornecedor_id'],
-            )),
+              service: SupplierServiceS(
+                id: s['id'],
+                name: s['nome_servico'],
+                price: s['valor_servico'],
+                supplierId: s['fornecedor_id'],
+              ),
+            ),
           )
           .toList();
     } on DatabaseException catch (e, s) {
@@ -169,6 +173,8 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
       await conn?.close();
     }
   }
+  
+  
 
   @override
   Future<List<Schedule>> findAllScheduleByUserSupplier(int userId) async {
@@ -176,7 +182,7 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
     try {
       conn = await connection.openConnection();
       final query = '''
-        SELECT 
+        SELECT
           a.id ,
           a.data_agendamento,
           a.status,
@@ -184,10 +190,10 @@ class IScheduleRepositoryImpl implements IScheduleRepository {
           a.nome_pet,
           f.id as fornec_id,
           f.nome as fornec_nome,
-          f.logo 
+          f.logo
         FROM agendamento a
-        INNER JOIN fornecedor f ON f.id = a.fornecedor_id
-        INNER JOIN usuario u ON u.fornecedor_id = f.id
+          INNER JOIN fornecedor f ON f.id = a.fornecedor_id
+          INNER JOIN usuario u ON u.fornecedor_id = f.id
         WHERE u.id = ?
         order by a.data_agendamento desc
       ''';
