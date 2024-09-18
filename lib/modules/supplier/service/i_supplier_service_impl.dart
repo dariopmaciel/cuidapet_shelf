@@ -18,6 +18,7 @@ class ISupplierServiceImpl implements ISupplierService {
   final ISupplierRepository repository;
   final IUserService userService;
 
+  // ignore: constant_identifier_names
   static const DISTANCE = 5;
 
   ISupplierServiceImpl({

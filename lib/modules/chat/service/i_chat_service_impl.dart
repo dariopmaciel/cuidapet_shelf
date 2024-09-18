@@ -7,6 +7,9 @@ import 'package:cuidapet_shelf/modules/chat/service/i_chat_service.dart';
 
 @LazySingleton(as: IChatService)
 class IChatServiceImpl implements IChatService {
-  IChatRepository repository;
+  final IChatRepository repository;
   IChatServiceImpl({required this.repository});
+  
+  @override
+  Future<int> startChat(int scheduleId)=> repository.startChat(scheduleId);
 }

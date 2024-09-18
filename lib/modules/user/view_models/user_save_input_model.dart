@@ -12,7 +12,7 @@ class UserSaveInputModel extends RequestMapping {
     required this.supplierId,
   }) : super.empty();
 
-  // ignore: non_constant_identifier_names
+  // ignore: non_constant_identifier_names, use_super_parameters
   UserSaveInputModel.RequestMapping(String dataRequest) : super(dataRequest);
   //ou
   // UserSaveInputModel.request(super.dataRequest);
