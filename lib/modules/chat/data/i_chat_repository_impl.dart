@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cuidapet_shelf/application/exceptions/database_exception.dart';
 import 'package:cuidapet_shelf/entities/chat.dart';
+import 'package:cuidapet_shelf/entities/deviceToken.dart';
+import 'package:cuidapet_shelf/entities/supplier.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:cuidapet_shelf/application/database/i_database_connection.dart';
@@ -72,13 +74,25 @@ class IChatRepositoryImpl implements IChatRepository {
       ''', [chatId]);
 
       if (result.isNotEmpty) {
+        final resultMysql = result.first;
         return Chat(
-          id: id,
-          user: user,
-          supplier: supplier,
-          nome: nome,
-          petName: petName,
-          status: status,
+          id: resultMysql['id'],
+          status: resultMysql['status'],
+          nome: resultMysql['agendamento_nome'],
+          petName: resultMysql['agendamento_nome_pet'],
+          supplier: Supplier(
+            id: resultMysql['fornecedor_id'],
+            name: resultMysql['fornec_nome'],
+          ),
+          user: resultMysql['usuario_id'],
+          userDevicetoken: DeviceToken(
+            android: (resultMysql['user_android_token'] as Blob?)?.toString(),
+            ios: (resultMysql['user_ios_token'] as Blob?)?.toString(),
+          ),
+          supplierDevice: DeviceToken(
+            android: (resultMysql['fornec_android_token'] as Blob?)?.toString(),
+            ios: (resultMysql['fornec_ios_token'] as Blob?)?.toString(),
+          ),
         );
       }
     } on MySqlConnection catch (e, s) {
