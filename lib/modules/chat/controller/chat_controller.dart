@@ -33,5 +33,10 @@ class ChatController {
     }
   }
 
+  @Route.post('/notify')
+  Future<Response> notifyUser(Request request) async{
+     return Response.ok(jsonEncode(''));
+  }
+
   Router get router => _$ChatControllerRouter(this);
 }
