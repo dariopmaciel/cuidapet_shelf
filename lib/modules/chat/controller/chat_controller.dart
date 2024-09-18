@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
@@ -10,6 +11,7 @@ import 'package:cuidapet_shelf/modules/chat/service/i_chat_service.dart';
 
 part 'chat_controller.g.dart';
 
+@Injectable()
 class ChatController {
   final IChatService service;
   final ILogger log;
