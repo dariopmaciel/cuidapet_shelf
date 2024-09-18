@@ -49,12 +49,12 @@ class IChatRepositoryImpl implements IChatRepository {
     try {
       conn = await connection.openConnection();
       final result = await conn.query('''
-        
+
       
       
       ''',[]);
     } on MySqlConnection catch (e, s) {
-      log.error('Erro ao iniciar CHAT', e, s);
+      log.error('Erro ao buscar dados do CHAT', e, s);
       throw DatabaseException();
     } finally {
       await conn?.close();
