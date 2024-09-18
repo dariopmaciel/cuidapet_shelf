@@ -62,17 +62,18 @@ class IChatRepositoryImpl implements IChatRepository {
   }
 }
 /*
-MySqlConnection? conn;
+  MySqlConnection? conn;
+  try {
+    conn = await connection.openConnection();
+    final result = await conn.query('''
 
-    try {
-      conn = await connection.openConnection();
-
-
-
-    } on MySqlConnection catch (e, s) {
-      log.error('Erro ao iniciar CHAT', e, s);
-      throw DatabaseException();
-    } finally {
-      await conn?.close();
-    }
-*/
+      
+      
+    ''',[]);
+  } on MySqlConnection catch (e, s) {
+    log.error('Erro ao buscar dados do CHAT', e, s);
+    throw DatabaseException();
+  } finally {
+    await conn?.close();
+  }
+  */
