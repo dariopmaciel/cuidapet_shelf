@@ -16,6 +16,11 @@ import '../../modules/category/data/i_categories_repository.dart' as _i57;
 import '../../modules/category/data/i_categories_repository_impl.dart' as _i724;
 import '../../modules/category/service/i_categories_service.dart' as _i967;
 import '../../modules/category/service/i_categories_service_impl.dart' as _i191;
+import '../../modules/chat/controller/chat_controller.dart' as _i194;
+import '../../modules/chat/data/i_chat_repository.dart' as _i216;
+import '../../modules/chat/data/i_chat_repository_impl.dart' as _i697;
+import '../../modules/chat/service/i_chat_service.dart' as _i189;
+import '../../modules/chat/service/i_chat_service_impl.dart' as _i989;
 import '../../modules/schedules/controller/schedule_controller.dart' as _i436;
 import '../../modules/schedules/data/i_schedule_repository.dart' as _i411;
 import '../../modules/schedules/data/i_schedule_repository_impl.dart' as _i171;
@@ -59,11 +64,17 @@ extension GetItInjectableX on _i174.GetIt {
               connection: gh<_i77.IDatabaseConnection>(),
               log: gh<_i742.ILogger>(),
             ));
+    gh.lazySingleton<_i216.IChatRepository>(() => _i697.IChatRepositoryImpl(
+          connection: gh<_i77.IDatabaseConnection>(),
+          log: gh<_i742.ILogger>(),
+        ));
     gh.lazySingleton<_i57.ICategoriesRepository>(
         () => _i724.ICategoriesRepositoryImpl(
               connection: gh<_i77.IDatabaseConnection>(),
               log: gh<_i742.ILogger>(),
             ));
+    gh.lazySingleton<_i189.IChatService>(
+        () => _i989.IChatServiceImpl(repository: gh<_i216.IChatRepository>()));
     gh.lazySingleton<_i610.IUserService>(() => _i705.IUserServiceImpl(
           log: gh<_i742.ILogger>(),
           userRepository: gh<_i872.IUserRepository>(),
@@ -78,6 +89,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i983.UserController>(() => _i983.UserController(
           userService: gh<_i610.IUserService>(),
+          log: gh<_i742.ILogger>(),
+        ));
+    gh.factory<_i194.ChatController>(() => _i194.ChatController(
+          service: gh<_i189.IChatService>(),
           log: gh<_i742.ILogger>(),
         ));
     gh.lazySingleton<_i967.ICategoriesService>(() =>

@@ -1,4 +1,5 @@
 import 'package:cuidapet_shelf/modules/category/categories_routers.dart';
+import 'package:cuidapet_shelf/modules/chat/chat_router.dart';
 import 'package:cuidapet_shelf/modules/schedules/schedule_router.dart';
 import 'package:cuidapet_shelf/modules/supplier/supplier_router.dart';
 import 'package:cuidapet_shelf/modules/user/user_router.dart';
@@ -12,6 +13,7 @@ class RouterConfigure {
     CategoriesRouters(),
     SupplierRouter(),
     ScheduleRouter(),
+    ChatRouter(),
   ];
 
   RouterConfigure(this._router);

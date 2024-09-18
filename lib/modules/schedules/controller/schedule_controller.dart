@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cuidapet_shelf/application/exceptions/database_exception.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
