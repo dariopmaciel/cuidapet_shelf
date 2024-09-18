@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cuidapet_shelf/application/exceptions/database_exception.dart';
+import 'package:cuidapet_shelf/entities/chat.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:cuidapet_shelf/application/database/i_database_connection.dart';
@@ -33,6 +34,25 @@ class IChatRepositoryImpl implements IChatRepository {
         DateTime.now().toIso8601String(),
       ]);
       return result.insertId!;
+    } on MySqlConnection catch (e, s) {
+      log.error('Erro ao iniciar CHAT', e, s);
+      throw DatabaseException();
+    } finally {
+      await conn?.close();
+    }
+  }
+
+  @override
+  Future<Chat> findChatById(int chat) async {
+    MySqlConnection? conn;
+
+    try {
+      conn = await connection.openConnection();
+      final result = await conn.query('''
+        
+      
+      
+      ''',[]);
     } on MySqlConnection catch (e, s) {
       log.error('Erro ao iniciar CHAT', e, s);
       throw DatabaseException();
