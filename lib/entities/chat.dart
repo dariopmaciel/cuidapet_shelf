@@ -10,8 +10,8 @@ class Chat {
   final String nome;
   final String petName;
   final String status;
-  final DeviceToken? userDevicetoken;
-  final DeviceToken? supplierDevice;
+  final DeviceToken?     userDeviceToken;
+  final DeviceToken? supplierDeviceToken;
   
   Chat({
     required this.id,
@@ -20,7 +20,7 @@ class Chat {
     required this.nome,
     required this.petName,
     required this.status,
-    this.userDevicetoken,
-    this.supplierDevice,
+    this.userDeviceToken,
+    this.supplierDeviceToken,
   });
 }

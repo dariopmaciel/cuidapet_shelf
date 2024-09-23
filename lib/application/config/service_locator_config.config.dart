@@ -39,6 +39,7 @@ import '../../modules/user/service/i_user_service.dart' as _i610;
 import '../../modules/user/service/i_user_service_impl.dart' as _i705;
 import '../database/i_database_connection.dart' as _i77;
 import '../database/i_database_connection_impl.dart' as _i795;
+import '../facades/push_notification_facede.dart' as _i185;
 import '../logger/i_logger.dart' as _i742;
 import 'database_connection_configuration.dart' as _i32;
 
@@ -68,13 +69,15 @@ extension GetItInjectableX on _i174.GetIt {
           connection: gh<_i77.IDatabaseConnection>(),
           log: gh<_i742.ILogger>(),
         ));
+    gh.lazySingleton<_i189.IChatService>(() => _i989.IChatServiceImpl(
+          repository: gh<_i216.IChatRepository>(),
+          pushNotificationFacede: gh<_i185.PushNotificationFacede>(),
+        ));
     gh.lazySingleton<_i57.ICategoriesRepository>(
         () => _i724.ICategoriesRepositoryImpl(
               connection: gh<_i77.IDatabaseConnection>(),
               log: gh<_i742.ILogger>(),
             ));
-    gh.lazySingleton<_i189.IChatService>(
-        () => _i989.IChatServiceImpl(repository: gh<_i216.IChatRepository>()));
     gh.lazySingleton<_i610.IUserService>(() => _i705.IUserServiceImpl(
           log: gh<_i742.ILogger>(),
           userRepository: gh<_i872.IUserRepository>(),

@@ -9,18 +9,16 @@ environment:
 dependencies:
   args: ^2.5.0
   crypto: ^3.0.5
-  dotenv: ^3.0.0  
-  # dotenv: ^4.2.0 # não funciona, conflito com o ENV
+  dotenv: ^3.0.0  # dotenv: ^4.2.0 # não funciona, conflito com o ENV
   get_it: ^7.7.0
-  # http_parser: ^4.1.0
   injectable: ^2.4.4
   injectable_generator: ^2.6.2
   jaguar_jwt: ^3.0.0
   logger: ^2.4.0
   mysql1: ^0.20.0
   shelf: ^1.4.2
-  collection: ^1.19.0
-  http_parser: ^4.1.0
+  
+  # http_parser: ^4.1.0
   shelf_router: ^1.1.4
   shelf_router_generator: ^1.1.0
     # git: 

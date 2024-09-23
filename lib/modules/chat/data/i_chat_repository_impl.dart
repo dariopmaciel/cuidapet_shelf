@@ -85,11 +85,11 @@ class IChatRepositoryImpl implements IChatRepository {
             name: resultMysql['fornec_nome'],
           ),
           user: resultMysql['usuario_id'],
-          userDevicetoken: DeviceToken(
+          userDeviceToken: DeviceToken(
             android: (resultMysql['user_android_token'] as Blob?)?.toString(),
             ios: (resultMysql['user_ios_token'] as Blob?)?.toString(),
           ),
-          supplierDevice: DeviceToken(
+          supplierDeviceToken: DeviceToken(
             android: (resultMysql['fornec_android_token'] as Blob?)?.toString(),
             ios: (resultMysql['fornec_ios_token'] as Blob?)?.toString(),
           ),
