@@ -31,7 +31,7 @@ class IChatServiceImpl implements IChatService {
           _notifyUser(chat.userDeviceToken?.tokens, model, chat);
           break;
         case NotificationUserType.supplier:
-        _notifyUser(chat.supplierDeviceToken?.tokens, model, chat);
+          _notifyUser(chat.supplierDeviceToken?.tokens, model, chat);
           break;
         default:
           throw Exception('Tipo de notificação não encontrada');
@@ -60,4 +60,8 @@ class IChatServiceImpl implements IChatService {
       payload: payload,
     );
   }
+
+  @override
+  Future<List<Chat>> getChatsByUser(int user) =>
+      repository.getChatsByUser(user);
 }

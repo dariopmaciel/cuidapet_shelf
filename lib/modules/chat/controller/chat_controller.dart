@@ -49,5 +49,19 @@ class ChatController {
     }
   }
 
+  @Route.get('/user')
+  Future<Response> findChatsByUser(Request request) async {
+    final user = int.parse(request.headers['user']!);
+    final chats = await service.getChatsByUser(user);
+//mapeio
+    final resultChats = chats.map((c) => {
+      'id': c.id,
+      'user': c.user,
+
+    },).toList();
+
+    return Response.ok(jsonEncode(''));
+  }
+
   Router get router => _$ChatControllerRouter(this);
 }
