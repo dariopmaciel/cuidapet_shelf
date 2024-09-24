@@ -5,7 +5,9 @@ import 'package:cuidapet_shelf/application/logger/i_logger.dart';
 import 'package:dotenv/dotenv.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
+@LazySingleton()
 class PushNotificationFacede {
   final ILogger log;
   PushNotificationFacede({required this.log});
@@ -56,7 +58,7 @@ class PushNotificationFacede {
           final responseData = jsonDecode(result.body);
           if (responseData['failure'] == 1) {
             log.error(
-                "Erro ao enviar notificação $device erro: ${responseData['results']?['error']}");
+                "Erro ao enviar notificação $device erro: ${responseData['results']?[0]}");
           } else {
             log.info("Notificação enviada com sucesso $device");
           }
