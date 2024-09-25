@@ -104,5 +104,10 @@ class ChatController {
     //funcionando ok
   }
 
+  @Route.put('/<chatId>/end-chat')
+  Future<Response> endChat(Request request) async {
+    return Response.ok(jsonEncode(''));
+  }
+
   Router get router => _$ChatControllerRouter(this);
 }
