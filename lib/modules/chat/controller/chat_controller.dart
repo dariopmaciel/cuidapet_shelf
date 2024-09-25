@@ -112,7 +112,7 @@ class ChatController {
   Future<Response> endChat(Request request, String chatId) async {
     try {
       await service.endChat(int.parse(chatId));
-      return Response.ok(jsonEncode('OK'));
+      return Response.ok(jsonEncode('CHAT FINALIZADO'));
     } catch (e, s) {
       log.error("Erro ao FINALIZAR CHAT $chatId", e, s);
       return Response.internalServerError();
