@@ -68,4 +68,6 @@ class IChatServiceImpl implements IChatService {
   @override
   Future<List<Chat>> getChatsBySupplier(int supplier) =>
       repository.getChatsBySupplier(supplier);
+
+
 }

@@ -243,6 +243,12 @@ class IChatRepositoryImpl implements IChatRepository {
       await conn?.close();
     }
   }
+  
+  @override
+  Future<void> endChat(int chatId) {
+    // TODO: implement endChat
+    throw UnimplementedError();
+  }
 }
 /*
   MySqlConnection? conn;
