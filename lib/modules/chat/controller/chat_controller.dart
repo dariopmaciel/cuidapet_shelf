@@ -84,29 +84,39 @@ class ChatController {
           body: jsonEncode({'message': 'usuario logado não e um fornecedor'}));
     }
     final supplierId = int.parse(supplier);
+    try {
+      final chats = await service.getChatsBySupplier(supplierId);
+      final resultChats = chats
+          .map((c) => {
+                'id': c.id,
+                'user': c.user,
+                'name': c.nome,
+                'pet_name': c.petName,
+                'supplier': {
+                  'id': c.supplier.id,
+                  'name': c.supplier.name,
+                  'logo': c.supplier.logo,
+                }
+              })
+          .toList();
 
-    final chats = await service.getChatsBySupplier(supplierId);
-    final resultChats = chats
-        .map((c) => {
-              'id': c.id,
-              'user': c.user,
-              'name': c.nome,
-              'pet_name': c.petName,
-              'supplier': {
-                'id': c.supplier.id,
-                'name': c.supplier.name,
-                'logo': c.supplier.logo,
-              }
-            })
-        .toList();
-
-    return Response.ok(jsonEncode(resultChats));
+      return Response.ok(jsonEncode(resultChats));
+    } catch (e, s) {
+      log.error("Erro ao buscar CHAT DO FORNECEDOR $supplierId", e, s);
+      return Response.internalServerError();
+    }
     //funcionando ok
   }
 
   @Route.put('/<chatId>/end-chat')
-  Future<Response> endChat(Request request) async {
-    return Response.ok(jsonEncode(''));
+  Future<Response> endChat(Request request, String chatId) async {
+    try {
+      await service.endChat(int.parse(chatId));
+      return Response.ok(jsonEncode('OK'));
+    } catch (e, s) {
+      log.error("Erro ao FINALIZAR CHAT $chatId", e, s);
+      return Response.internalServerError();
+    }
   }
 
   Router get router => _$ChatControllerRouter(this);
