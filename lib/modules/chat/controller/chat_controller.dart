@@ -76,5 +76,7 @@ class ChatController {
     }
   }
 
+  
+
   Router get router => _$ChatControllerRouter(this);
 }
