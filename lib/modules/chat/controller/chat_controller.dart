@@ -53,8 +53,8 @@ class ChatController {
   Future<Response> findChatsByUser(Request request) async {
     try {
       final user = int.parse(request.headers['user']!);
-      final chats = await service.getChatsByUser(user);
       //mapeio
+      final chats = await service.getChatsByUser(user);
       final resultChats = chats
           .map((c) => {
                 'id': c.id,
@@ -85,7 +85,22 @@ class ChatController {
     }
     final supplierId = int.parse(supplier);
 
-    return Response.ok(jsonEncode(''));
+    final chats = await service.getChatsBySupplier(supplierId);
+    final resultChats = chats
+        .map((c) => {
+              'id': c.id,
+              'user': c.user,
+              'name': c.nome,
+              'pet_name': c.petName,
+              'supplier': {
+                'id': c.supplier.id,
+                'name': c.supplier.name,
+                'logo': c.supplier.logo,
+              }
+            })
+        .toList();
+
+    return Response.ok(jsonEncode(resultChats));
   }
 
   Router get router => _$ChatControllerRouter(this);
