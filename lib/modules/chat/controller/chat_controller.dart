@@ -101,6 +101,7 @@ class ChatController {
         .toList();
 
     return Response.ok(jsonEncode(resultChats));
+    //funcionando ok
   }
 
   Router get router => _$ChatControllerRouter(this);

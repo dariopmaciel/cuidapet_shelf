@@ -197,7 +197,7 @@ class IChatRepositoryImpl implements IChatRepository {
     MySqlConnection? conn;
     try {
       conn = await connection.openConnection();
-     final result = await conn.query('''
+      final result = await conn.query('''
             SELECT
               c.id,
               c.data_criacao,
