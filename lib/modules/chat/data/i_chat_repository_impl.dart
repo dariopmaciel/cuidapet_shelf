@@ -184,9 +184,8 @@ class IChatRepositoryImpl implements IChatRepository {
             ),
           )
           .toList();
-    } on MySqlConnection catch (e, s) {
-      log.error('Erro ao buscar chats de um usuario', e, s);
-      // throw DatabaseException();
+    } on MySqlException catch (e, s) {
+      log.error('Erro ao buscar CHATS dO USUARIO', e, s);
       throw DatabaseException();
     } finally {
       await conn?.close();
@@ -198,13 +197,47 @@ class IChatRepositoryImpl implements IChatRepository {
     MySqlConnection? conn;
     try {
       conn = await connection.openConnection();
-      final result = await conn.query('''
-
-      
-      
-    ''', []);
-    } on MySqlConnection catch (e, s) {
-      log.error('Erro ao buscar dados do CHAT', e, s);
+     final result = await conn.query('''
+            SELECT
+              c.id,
+              c.data_criacao,
+              c.status,
+              a.nome,
+              a.nome_pet,
+              a.fornecedor_id,
+              a.usuario_id,
+              f.nome as fornec_nome,
+              f.logo
+            FROM chats as c
+            INNER JOIN agendamento a on a.id = c.agendamento_id
+            INNER JOIN fornecedor f on f.id = a.fornecedor_id
+            WHERE
+              a.fornecedor_id = ?
+            AND
+              c.status = 'A'
+            ORDER BY c.data_criacao
+      ''', [supplier]);
+      return result
+          .map(
+            (c) => Chat(
+              id: c['id'],
+              user: c['usuario_id'],
+              supplier: Supplier(
+                id: c['fornecedor_id'],
+                name: c['fornec_nome'],
+                // logo: (c['logo'] as Blob?)?.toString(),
+                logo: (c['logo'] != null)
+                    ? (c['logo'] as Blob).toString()
+                    : null, // Corrigido: Tratamento seguro para Blob
+              ),
+              nome: c['nome'],
+              petName: c['nome_pet'],
+              status: c['status'],
+            ),
+          )
+          .toList();
+    } on MySqlException catch (e, s) {
+      log.error('Erro ao buscar CHATS do FORNECEDOR', e, s);
       throw DatabaseException();
     } finally {
       await conn?.close();
@@ -213,17 +246,19 @@ class IChatRepositoryImpl implements IChatRepository {
 }
 /*
   MySqlConnection? conn;
-  try {
-    conn = await connection.openConnection();
-    final result = await conn.query('''
+    try {
+      conn = await connection.openConnection();
+      final result = await conn.query('''
 
       
       
-    ''',[]);
-  } on MySqlConnection catch (e, s) {
-    log.error('Erro ao buscar dados do CHAT', e, s);
-    throw DatabaseException();
-  } finally {
-    await conn?.close();
+    ''', []);
+    return result.map((e) => ).toList();
+    } on Mysq catch (e, s) {
+      log.error('Erro ao buscar dados do CHAT', e, s);
+      throw DatabaseException();
+    } finally {
+      await conn?.close();
+    }
   }
   */
