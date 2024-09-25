@@ -192,6 +192,24 @@ class IChatRepositoryImpl implements IChatRepository {
       await conn?.close();
     }
   }
+
+  @override
+  Future<List<Chat>> getChatsBySupplier(int supplier) async {
+    MySqlConnection? conn;
+    try {
+      conn = await connection.openConnection();
+      final result = await conn.query('''
+
+      
+      
+    ''', []);
+    } on MySqlConnection catch (e, s) {
+      log.error('Erro ao buscar dados do CHAT', e, s);
+      throw DatabaseException();
+    } finally {
+      await conn?.close();
+    }
+  }
 }
 /*
   MySqlConnection? conn;
