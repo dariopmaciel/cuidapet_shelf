@@ -76,7 +76,17 @@ class ChatController {
     }
   }
 
-  
+  @Route.get('/supplier')
+  Future<Response> findChatsBySupplier(Request request) async {
+    final supplier = request.headers['supplier'];
+    if (supplier == null) {
+      return Response(400,
+          body: jsonEncode({'message': 'usuario logado não e um fornecedor'}));
+    }
+    final supplierId = int.parse(supplier);
+
+    return Response.ok(jsonEncode(''));
+  }
 
   Router get router => _$ChatControllerRouter(this);
 }
