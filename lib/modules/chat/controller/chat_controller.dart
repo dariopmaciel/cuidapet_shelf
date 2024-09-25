@@ -56,19 +56,17 @@ class ChatController {
       final chats = await service.getChatsByUser(user);
       //mapeio
       final resultChats = chats
-          .map(
-            (c) => {
-              'id': c.id,
-              'user': c.user,
-              'name': c.nome,
-              'pet_name': c.petName,
-              'supplier': {
-                'id': c.supplier.id,
-                'name': c.supplier.name,
-                'logo': c.supplier.logo,
-              }
-            },
-          )
+          .map((c) => {
+                'id': c.id,
+                'user': c.user,
+                'name': c.nome,
+                'pet_name': c.petName,
+                'supplier': {
+                  'id': c.supplier.id,
+                  'name': c.supplier.name,
+                  'logo': c.supplier.logo,
+                }
+              })
           .toList();
 
       return Response.ok(jsonEncode(resultChats));

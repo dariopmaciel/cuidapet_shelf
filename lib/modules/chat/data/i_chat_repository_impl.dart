@@ -108,26 +108,27 @@ class IChatRepositoryImpl implements IChatRepository {
     MySqlConnection? conn;
     try {
       conn = await connection.openConnection();
-      final result = await conn.query('''
-            SELECT
+      final querry = ('''
+         SELECT
               c.id,
               c.data_criacao,
               c.status, 
               a.nome,
               a.nome_pet,
               a.fornecedor_id,
-              a.usuario_id
+              a.usuario_id,
               f.nome as fornec_nome,
               f.logo
             FROM chats as c
             INNER JOIN agendamento a on a.id = c.agendamento_id
             INNER JOIN fornecedor f on f.id = a.fornecedor_id
             WHERE 
-              a.usuario_id = ?,
+              a.usuario_id = ?
             AND
               c.status = 'A'
             ORDER BY c.data_criacao      
       ''');
+      final result = await conn.query(querry, [user]);
       return result
           .map(
             (c) => Chat(
@@ -136,7 +137,7 @@ class IChatRepositoryImpl implements IChatRepository {
               supplier: Supplier(
                 id: c['fornecedor_id'],
                 name: c['fornec_nome'],
-                logo: c['logo'],
+                logo: (c['logo'] as Blob?)?.toString(),
               ),
               nome: c['nome'],
               petName: c['nome_pet'],
@@ -144,8 +145,48 @@ class IChatRepositoryImpl implements IChatRepository {
             ),
           )
           .toList();
+      // final result = await conn.query('''
+      //       SELECT
+      //         c.id,
+      //         c.data_criacao,
+      //         c.status,
+      //         a.nome,
+      //         a.nome_pet,
+      //         a.fornecedor_id,
+      //         a.usuario_id,
+      //         f.nome as fornec_nome,
+      //         f.logo
+      //       FROM chats as c
+      //       INNER JOIN agendamento a on a.id = c.agendamento_id
+      //       INNER JOIN fornecedor f on f.id = a.fornecedor_id
+      //       WHERE
+      //         a.usuario_id = ?
+      //       AND
+      //         c.status = 'A'
+      //       ORDER BY c.data_criacao
+      // ''', [user]);
+      // return result
+      //     .map(
+      //       (c) => Chat(
+      //         id: c['id'],
+      //         user: c['usuario_id'],
+      //         supplier: Supplier(
+      //           id: c['fornecedor_id'],
+      //           name: c['fornec_nome'],
+      //           // logo: (c['logo'] as Blob?)?.toString(),
+      //           logo: (c['logo'] != null)
+      //               ? (c['logo'] as Blob).toString()
+      //               : null, // Corrigido: Tratamento seguro para Blob
+      //         ),
+      //         nome: c['nome'],
+      //         petName: c['nome_pet'],
+      //         status: c['status'],
+      //       ),
+      //     )
+      //     .toList();
     } on MySqlConnection catch (e, s) {
       log.error('Erro ao buscar chats de um usuario', e, s);
+      // throw DatabaseException();
       throw DatabaseException();
     } finally {
       await conn?.close();
